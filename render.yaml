@@ -1,5 +1,6 @@
 # Render.com 部署配置
-# 注册 Render 账号后，创建新 Web Service，连接此仓库即可部署
+# 免费 Web Service - 数据在运行期间可读写，重启后恢复初始数据
+# 如需持久化数据，升级到付费版并取消下方 disk 配置的注释
 
 services:
   - type: web
@@ -8,10 +9,12 @@ services:
     buildCommand: npm install
     startCommand: npm start
     healthCheckPath: /api/health
+    plan: free
     envVars:
       - key: NODE_ENV
         value: production
-    disk:
-      name: data
-      mountPath: /opt/data
-      sizeGB: 1
+    # 如需数据持久化，升级到 Starter 计划后取消注释：
+    # disk:
+    #   name: data
+    #   mountPath: /opt/data
+    #   sizeGB: 1
