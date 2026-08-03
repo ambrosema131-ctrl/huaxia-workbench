@@ -167,8 +167,14 @@ a{color:inherit;text-decoration:none}
 .workline-card .wl-goal{font-size:11px;color:var(--text-3);margin-bottom:10px;line-height:1.5}
 .wl-progress-bar{height:4px;background:var(--bg-hover);border-radius:2px;overflow:hidden;margin-bottom:6px}
 .wl-progress-fill{height:100%;border-radius:2px;transition:width .3s}
-.workline-card .wl-stats{display:flex;justify-content:space-between;font-size:11px;color:var(--text-3)}
+.workline-card .wl-stats{display:flex;justify-content:space-between;font-size:11px;color:var(--text-3);margin-bottom:10px}
 .workline-card .wl-stats b{color:var(--text-1);font-weight:600}
+.workline-card .wl-highlights{border-top:1px dashed var(--border);padding-top:10px;margin-top:2px}
+.workline-card .wl-highlights-title{font-size:10px;font-weight:600;color:var(--text-3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;display:flex;align-items:center;gap:4px}
+.workline-card .wl-highlight-item{font-size:11px;color:var(--text-2);line-height:1.45;display:flex;align-items:flex-start;gap:5px;margin-bottom:4px}
+.workline-card .wl-highlight-item svg{flex-shrink:0;margin-top:1px}
+.workline-card .wl-highlight-item span{flex:1;min-width:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.workline-card .wl-highlight-empty{font-size:11px;color:var(--text-3);font-style:italic}
 
 .dashboard-row{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-bottom:24px}
 
@@ -1990,6 +1996,16 @@ function renderDashboard(){
   grid.innerHTML=Object.entries(WORKLINES).map(([key,wl])=>{
     const stats=getWorklineStats(key);
     const pct=stats.total?Math.round(stats.done/stats.total*100):0;
+    const highlights=TASKS.filter(t=>t.wl===key&&t.status==='done').slice(0,2);
+    const highlightHtml=highlights.length
+      ? `<div class="wl-highlights">
+          <div class="wl-highlights-title"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:${wl.tagColor.dot}"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>亮点工作</div>
+          ${highlights.map(t=>`<div class="wl-highlight-item"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="${wl.tagColor.dot}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>${escapeHtml(t.title)}</span></div>`).join('')}
+         </div>`
+      : `<div class="wl-highlights">
+          <div class="wl-highlights-title"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="color:${wl.tagColor.dot}"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>亮点工作</div>
+          <div class="wl-highlight-empty">暂无已完成的亮点，继续推进</div>
+         </div>`;
     return `<div class="workline-card" onclick="filterWorkline('${key}')">
       <span class="wl-tag" style="background:${wl.tagColor.bg};color:${wl.tagColor.text}">${wl.short}</span>
       <div class="wl-title">${wl.name}</div>
@@ -1999,6 +2015,7 @@ function renderDashboard(){
         <span><b>${stats.progress}</b> 进行中</span>
         <span><b>${stats.done}</b>/${stats.total} 完成</span>
       </div>
+      ${highlightHtml}
     </div>`;
   }).join('');
 
@@ -4318,15 +4335,22 @@ function submitQuickBook(){
 }
 
 function filterWorkline(wlKey,el){
-  switchView('kanban',null);
+  switchView('project',null);
   document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
   if(el)el.classList.add('active');
   currentKanbanFilter=wlKey;
+  currentProjectTab='board';
+  document.querySelectorAll('.project-tab').forEach(t=>t.classList.remove('active'));
+  const boardTab=document.querySelector('.project-tab[data-pt="board"]');
+  if(boardTab)boardTab.classList.add('active');
+  document.querySelectorAll('.project-pane').forEach(p=>p.style.display='none');
+  const paneBoard=document.getElementById('pane-board');
+  if(paneBoard)paneBoard.style.display='block';
   document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
   const targetBtn=[...document.querySelectorAll('.filter-btn')].find(b=>b.textContent.includes(WORKLINES[wlKey].short));
   if(targetBtn)targetBtn.classList.add('active');
   renderKanban();
-  document.getElementById('page-title').textContent='工作清单';
+  document.getElementById('page-title').textContent='项目看板';
   document.getElementById('page-sub').textContent=WORKLINES[wlKey].name;
 }
 
