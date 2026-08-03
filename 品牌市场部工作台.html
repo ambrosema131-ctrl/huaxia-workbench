@@ -2029,7 +2029,7 @@ function renderDashboard(){
   }).join('');
 
   // 战役活动动态卡片 - 与全国展会动态统一格式
-  const c=d;
+  const c=CAMPAIGN_DATA;
   const campGrid=document.getElementById('campaign-overview-grid');
   if(campGrid){
     const m=c.metrics;
@@ -4527,7 +4527,7 @@ function init(){
   renderCalendar();
   renderResources();
 
-  document.getElementById('nav-kanban-count').textContent=TASKS.filter(t=>t.status==='progress').length;
+  document.getElementById('nav-project-count').textContent=TASKS.filter(t=>t.status==='progress').length;
   let docCount=0;
   RESOURCES.forEach(r=>docCount+=r.items.length);
   document.getElementById('nav-doc-count').textContent=docCount;
