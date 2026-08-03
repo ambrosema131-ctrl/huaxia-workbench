@@ -1,0 +1,17 @@
+# Render.com 部署配置
+# 注册 Render 账号后，创建新 Web Service，连接此仓库即可部署
+
+services:
+  - type: web
+    name: huaxia-workbench
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+    disk:
+      name: data
+      mountPath: /opt/data
+      sizeGB: 1
