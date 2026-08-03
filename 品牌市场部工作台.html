@@ -844,11 +844,65 @@ a{color:inherit;text-decoration:none}
           <div class="expo-grid" id="expo-grid"></div>
         </div>
 
+        <div class="metric-grid" style="margin-bottom:24px">
+          <div class="metric-card metric-clickable" onclick="switchView('project',document.querySelector('[onclick*=project]'))">
+            <div class="metric-arrow">→</div>
+            <div class="label">全年展会场次</div>
+            <div class="value" style="color:var(--blue)" id="dash-total-expo">188</div>
+            <div class="delta up">▲ 数据已去重</div>
+          </div>
+          <div class="metric-card metric-clickable" onclick="switchView('project',document.querySelector('[onclick*=project]'))">
+            <div class="metric-arrow">→</div>
+            <div class="label">本月待开</div>
+            <div class="value" style="color:var(--purple)" id="dash-month-expo">—</div>
+            <div class="delta neutral">点击进入项目看板</div>
+          </div>
+          <div class="metric-card metric-clickable" onclick="switchView('project',document.querySelector('[onclick*=project]'))">
+            <div class="metric-arrow">→</div>
+            <div class="label">已确认展会</div>
+            <div class="value" style="color:var(--green)" id="dash-confirmed-expo">—</div>
+            <div class="delta up">▲ 稳推进</div>
+          </div>
+          <div class="metric-card metric-clickable" onclick="switchView('project',document.querySelector('[onclick*=project]'))">
+            <div class="metric-arrow">→</div>
+            <div class="label">暂定展会</div>
+            <div class="value" style="color:var(--amber)" id="dash-tentative-expo">—</div>
+            <div class="delta neutral">需进一步确认</div>
+          </div>
+        </div>
+
         <div class="expo-section">
           <div class="section-header">
             <h2>战役活动动态<span class="section-sub">数据来源：<a href="https://doc.weixin.qq.com/sheet/e3_AekADgYdAKkCNOJcAIbumTFe8Rc9q?scode=ALEAaAe2AA0PhHpFkAAewAsAasAJw&tab=000001" target="_blank" class="data-source-link">2026年Q3战役目标拆解 ↗</a></span></h2>
           </div>
           <div class="expo-grid" id="campaign-overview-grid"></div>
+        </div>
+
+        <div class="metric-grid" style="margin-bottom:24px">
+          <div class="metric-card metric-clickable" onclick="switchView('campaign',document.querySelector('[onclick*=campaign]'))">
+            <div class="metric-arrow">→</div>
+            <div class="label">5城实时数据</div>
+            <div class="value" style="color:var(--blue)">5<span style="font-size:13px;color:var(--text-3);font-weight:400"> 城</span></div>
+            <div class="delta up">▲ 武汉/南昌/东莞已结束</div>
+          </div>
+          <div class="metric-card metric-clickable" onclick="switchView('campaign',document.querySelector('[onclick*=campaign]'))">
+            <div class="metric-arrow">→</div>
+            <div class="label">领先分站</div>
+            <div class="value" style="color:var(--purple)">鄂赣湘</div>
+            <div class="delta up">▲ 综合业绩领先</div>
+          </div>
+          <div class="metric-card metric-clickable" onclick="switchView('campaign',document.querySelector('[onclick*=campaign]'))">
+            <div class="metric-arrow">→</div>
+            <div class="label">本周P0事项</div>
+            <div class="value" style="color:var(--red)">3</div>
+            <div class="delta neutral">需立即拍板</div>
+          </div>
+          <div class="metric-card metric-clickable" onclick="switchView('campaign',document.querySelector('[onclick*=campaign]'))">
+            <div class="metric-arrow">→</div>
+            <div class="label">本周P1事项</div>
+            <div class="value" style="color:var(--amber)">1</div>
+            <div class="delta neutral">本周内完成</div>
+          </div>
         </div>
 
         <div class="section-header" style="margin-top:18px">
@@ -1986,6 +2040,20 @@ function renderExpoGrid(){
 }
 
 function renderDashboard(){
+  // 展会动态快捷卡片数字自动统计
+  if(typeof EXPO_DATA!=='undefined'){
+    const totalExpo=EXPO_DATA.length;
+    const now=new Date();
+    const y=now.getFullYear(),mo=now.getMonth();
+    const monthStart=new Date(y,mo,1),monthEnd=new Date(y,mo+1,0);
+    const monthExpo=EXPO_DATA.filter(e=>{const s=new Date(e.date);return s>=monthStart&&s<=monthEnd;}).length;
+    const confirmedExpo=EXPO_DATA.filter(e=>e.status==='已确认').length;
+    const tentativeExpo=EXPO_DATA.filter(e=>e.status==='暂定').length;
+    const elT=document.getElementById('dash-total-expo');if(elT)elT.textContent=totalExpo;
+    const elM=document.getElementById('dash-month-expo');if(elM)elM.textContent=monthExpo||'—';
+    const elC=document.getElementById('dash-confirmed-expo');if(elC)elC.textContent=confirmedExpo;
+    const elT2=document.getElementById('dash-tentative-expo');if(elT2)elT2.textContent=tentativeExpo;
+  }
   const grid=document.getElementById('workline-grid');
   grid.innerHTML=Object.entries(WORKLINES).map(([key,wl])=>{
     const stats=getWorklineStats(key);
@@ -2002,18 +2070,7 @@ function renderDashboard(){
     </div>`;
   }).join('');
 
-  const loadList=document.getElementById('team-load-list');
-  const sortedTeam=[...TEAM].sort((a,b)=>b.tasks-a.tasks);
-  loadList.innerHTML=sortedTeam.map(m=>{
-    const loadPct=Math.min(m.tasks/5*100,100);
-    const loadColor=m.tasks>=4?'#ef4444':m.tasks>=3?'#f59e0b':'#10b981';
-    return `<div class="team-load-item">
-      <div class="avatar" style="background:${m.color}">${getInitials(m.name)}</div>
-      <div class="info"><div class="name">${m.name}</div><div class="role">${m.role}</div></div>
-      <div class="load-bar"><div class="load-fill" style="width:${loadPct}%;background:${loadColor}"></div></div>
-      <div class="count">${m.tasks}</div>
-    </div>`;
-  }).join('');
+  // 团队工作负载区块已移除，跳过渲染
 
   const todoList=document.getElementById('today-todo-list');
   const todos=[
