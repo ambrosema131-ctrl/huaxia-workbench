@@ -4561,12 +4561,19 @@ function init(){
     searchQuery=q;
     if(q){
       if(currentKanbanView!=='list')toggleKanbanView('list',document.querySelector('.view-toggle button:last-child'));
-      switchView('kanban',null);
+      switchView('project',null);
+      currentProjectTab='list';
+      document.querySelectorAll('.project-tab').forEach(t=>t.classList.remove('active'));
+      const listTab=document.querySelector('.project-tab[data-pt="list"]');
+      if(listTab)listTab.classList.add('active');
+      document.querySelectorAll('.project-pane').forEach(p=>p.style.display='none');
+      const paneList=document.getElementById('pane-list');
+      if(paneList)paneList.style.display='block';
       document.getElementById('page-title').textContent='搜索结果';
       document.getElementById('page-sub').textContent='"'+q+'"';
     }else{
-      document.getElementById('page-title').textContent='工作清单';
-      document.getElementById('page-sub').textContent='项目看板管理';
+      document.getElementById('page-title').textContent='项目看板';
+      document.getElementById('page-sub').textContent='项目 · 周报 · 月度计划';
     }
     renderKanban();
   });
