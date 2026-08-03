@@ -2744,11 +2744,15 @@ function switchView(view,el){
 }
 
 /* ===== Meeting Module ===== */
+// 企微会议API授权状态：当前企业不支持授权机器人会议权限(2026-08-03 wecom-cli验证)
+// 设置为true后会从真实API拉取会议数据；false时显示未授权提示+二维码按钮
+const MEETING_API_AUTHORIZED=false;
 const SAMPLE_MEETINGS=[
   {id:'demo-1',title:'Q3营销物料评审会',start:'14:00',duration:90,location:'3楼会议室A',attendees:['马龙','范振','潘科元','刘永芳'],status:'soon'},
   {id:'demo-2',title:'福州活动方案共识会',start:'16:30',duration:60,location:'线上会议',attendees:['马龙','刘永芳','宇豪'],status:'later'},
   {id:'demo-3',title:'抖音电商项目周同步',start:'10:00',duration:45,location:'5楼小会议室',attendees:['薛易','潘科元','白子琦'],status:'past'}
 ];
+const UNAUTH_MEETING_HTML=`<div class="meeting-empty"><div class="me-icon">🔒</div><div style="font-size:13px;color:var(--text-2);margin-top:6px">企微会议API未授权</div><div style="font-size:11px;color:var(--text-3);margin-top:4px">请使用上方二维码/按钮预定</div></div>`;
 
 function escapeHtml(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 
@@ -3697,6 +3701,10 @@ function renderMeeting(){
 
 function renderTodayMeetings(){
   const container=document.getElementById('today-meetings');
+  if(!MEETING_API_AUTHORIZED){
+    container.innerHTML=UNAUTH_MEETING_HTML;
+    return;
+  }
   const now=new Date();
   const currentHour=now.getHours();
   const meetings=SAMPLE_MEETINGS;
@@ -3731,6 +3739,26 @@ function renderTodayMeetings(){
 
 function renderWeekMeetings(){
   const container=document.getElementById('week-meetings');
+  if(!MEETING_API_AUTHORIZED){
+    const days=['日','一','二','三','四','五','六'];
+    const now=new Date();
+    const monday=new Date(now);
+    monday.setDate(now.getDate()-((now.getDay()+6)%7));
+    monday.setHours(0,0,0,0);
+    let html='';
+    for(let i=0;i<7;i++){
+      const d=new Date(monday);
+      d.setDate(monday.getDate()+i);
+      const isToday=d.toDateString()===now.toDateString();
+      html+=`<div class="week-day ${isToday?'today':''}">
+        <div class="wd-name">周${days[d.getDay()]}</div>
+        <div class="wd-date">${d.getMonth()+1}/${d.getDate()}</div>
+        <div style="font-size:10px;color:var(--text-3);text-align:center;margin-top:8px">—</div>
+      </div>`;
+    }
+    container.innerHTML=html;
+    return;
+  }
   const days=['日','一','二','三','四','五','六'];
   const now=new Date();
   const monday=new Date(now);
@@ -3758,6 +3786,10 @@ function renderWeekMeetings(){
 }
 
 function updateNavMeetingBadge(){
+  if(!MEETING_API_AUTHORIZED){
+    document.getElementById('nav-meeting-count').textContent='—';
+    return;
+  }
   const count=SAMPLE_MEETINGS.filter(m=>m.status!=='past').length;
   document.getElementById('nav-meeting-count').textContent=count;
 }
