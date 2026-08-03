@@ -80,7 +80,60 @@ a{color:inherit;text-decoration:none}
 .expo-card .ec-date{font-size:11px;color:var(--text-3);margin-top:2px}
 .expo-card .ec-city.ec-tentative{border:1px dashed var(--amber);background:var(--amber-bg)!important}
 .expo-card .ec-status{display:inline-block;font-size:9px;padding:1px 4px;border-radius:4px;background:var(--amber);color:#fff;margin-left:4px;font-weight:600;vertical-align:middle}
+
+/* ===== Campaign Overview Cards (on dashboard) ===== */
+.camp-card{border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;background:var(--bg-card);position:relative;overflow:hidden}
+.camp-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.camp-card.camp-time::before{background:var(--blue)}
+.camp-card.camp-rev::before{background:var(--green)}
+.camp-card.camp-inv::before{background:var(--amber)}
+.camp-card.camp-lead::before{background:var(--purple)}
+.cb-bar{height:6px;background:var(--bg-soft);border-radius:3px;overflow:hidden;margin-top:8px}
+.cb-fill{height:100%;border-radius:3px;transition:width .3s}
+
 .metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:8px}
+
+/* ===== Project View Tabs (合并 工作清单+周报中心) ===== */
+.project-tabs{display:flex;gap:8px;align-items:center;background:#fff;padding:6px;border-radius:var(--radius);border:1px solid var(--border);margin-bottom:16px;flex-wrap:wrap}
+.project-tab{padding:9px 14px;border-radius:var(--radius-sm);cursor:pointer;font-size:13px;color:var(--text-2);transition:all .15s;display:flex;align-items:center;gap:6px;font-weight:500}
+.project-tab:hover{background:var(--bg-hover);color:var(--text-1)}
+.project-tab.active{background:var(--blue-bg);color:var(--blue-text);font-weight:600}
+.project-tab .pt-icon{font-size:14px}
+.project-tab .pt-badge{margin-left:4px;font-size:11px;background:var(--gray-bg);color:var(--gray-text);padding:1px 7px;border-radius:10px;font-weight:600}
+.project-tab.active .pt-badge{background:var(--blue);color:#fff}
+.project-tabs-tools{margin-left:auto;display:flex;gap:8px;align-items:center}
+.project-pane{animation:fadeIn .2s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* ===== Calendar View ===== */
+.calendar-toolbar{display:flex;gap:12px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+.cal-nav{display:flex;gap:8px;align-items:center}
+.cal-label{padding:6px 14px;background:var(--bg-soft);border-radius:var(--radius-sm);font-weight:600;font-size:13px;min-width:140px;text-align:center}
+.calendar-grid{display:grid;grid-template-columns:120px repeat(7,1fr);background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.cal-header-cell,.cal-row-header,.cal-cell{padding:8px 6px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);min-height:80px;font-size:12px}
+.cal-header-cell{background:var(--bg-soft);font-weight:600;text-align:center;min-height:auto;padding:10px 6px;display:flex;flex-direction:column;justify-content:center;gap:2px}
+.cal-header-cell.today{background:var(--blue-bg);color:var(--blue-text)}
+.cal-header-cell .chd-week{font-size:10px;color:var(--text-3);font-weight:400}
+.cal-header-cell.today .chd-week{color:var(--blue-text)}
+.cal-header-cell .chd-date{font-size:15px;font-weight:700}
+.cal-row-header{background:var(--bg-soft);display:flex;align-items:center;gap:8px;font-weight:500}
+.cal-row-header .crh-avatar{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:600;font-size:12px;flex-shrink:0}
+.cal-row-header .crh-info{flex:1;min-width:0}
+.cal-row-header .crh-name{font-weight:600;font-size:13px}
+.cal-row-header .crh-role{font-size:10px;color:var(--text-3)}
+.cal-cell{position:relative;cursor:pointer;transition:background .15s}
+.cal-cell:hover{background:var(--bg-hover)}
+.cal-cell.today{background:rgba(59,130,246,.05)}
+.cal-cell-empty{color:var(--text-3);font-size:11px;text-align:center;padding-top:30px}
+.cal-event{display:block;padding:4px 6px;border-radius:4px;font-size:11px;margin-bottom:3px;line-height:1.3;border-left:3px solid;cursor:pointer}
+.cal-event:hover{filter:brightness(.95)}
+.cal-event.meeting{background:#eff6ff;color:#1e40af;border-color:#3b82f6}
+.cal-event.outing{background:#ecfdf5;color:#065f46;border-color:#10b981}
+.cal-event.leave{background:#fef2f2;color:#991b1b;border-color:#ef4444}
+.cal-event.task{background:#fffbeb;color:#92400e;border-color:#f59e0b}
+.cal-event.other{background:var(--bg-soft);color:var(--text-2);border-color:var(--text-3)}
+.cal-event .ce-time{font-size:10px;font-weight:600;margin-bottom:1px}
+.cal-event .ce-title{font-weight:500}
 .metric-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px}
 .metric-card .label{font-size:12px;color:var(--text-3);font-weight:500}
 .metric-card .value{font-size:28px;font-weight:700;margin-top:4px;line-height:1.1}
@@ -724,33 +777,30 @@ a{color:inherit;text-decoration:none}
       <div class="nav-item active" onclick="switchView('dashboard',this)">
         <span class="nav-icon">▦</span> 仪表盘首页
       </div>
-      <div class="nav-item" onclick="switchView('kanban',this)">
-        <span class="nav-icon">▤</span> 工作清单
-        <span class="nav-badge" id="nav-kanban-count">14</span>
+      <div class="nav-item" onclick="switchView('project',this)">
+        <span class="nav-icon">▤</span> 项目看板
+        <span class="nav-badge" id="nav-project-count">22</span>
+      </div>
+      <div class="nav-item" onclick="switchView('calendar',this)">
+        <span class="nav-icon">◫</span> 工作日历
+        <span class="nav-badge" id="nav-calendar-count">—</span>
       </div>
       <div class="nav-item" onclick="switchView('meeting',this)">
         <span class="nav-icon">◴</span> 会议室预定
-        <span class="nav-badge" id="nav-meeting-count">0</span>
+        <span class="nav-badge" id="nav-meeting-count">—</span>
       </div>
       <div class="nav-item" onclick="switchView('campaign',this)">
         <span class="nav-icon">◈</span> 战役看板
         <span class="nav-badge">Q3</span>
       </div>
-      <div class="nav-item" onclick="switchView('team',this)">
-        <span class="nav-icon">◐</span> 团队视图
-        <span class="nav-badge">9</span>
-      </div>
-      <div class="nav-item" onclick="switchView('report',this)">
-        <span class="nav-icon">◔</span> 周报中心
+      <div class="nav-item" onclick="switchView('design-demand',this)">
+        <span class="nav-icon" style="color:#e8556d">❀</span> 设计需求
+        <span class="nav-badge" id="nav-demand-count" style="background:var(--blue);color:#fff">0</span>
       </div>
       <div class="nav-section-title">资源</div>
       <div class="nav-item" onclick="switchView('resource',this)">
         <span class="nav-icon">▤</span> 资料中心
         <span class="nav-badge" id="nav-doc-count">18</span>
-      </div>
-      <div class="nav-item" onclick="switchView('design-demand',this)">
-        <span class="nav-icon" style="color:#e8556d">❀</span> 设计需求
-        <span class="nav-badge" id="nav-demand-count" style="background:var(--blue);color:#fff">0</span>
       </div>
       <div class="nav-item" onclick="window.open('https://docs.qq.com/smartsheet/DZGJ5bXFPT0tmd1Rx?_fid=dbymqOOKfwTq','_blank')">
         <span class="nav-icon">✦</span> 需求反馈
@@ -794,6 +844,13 @@ a{color:inherit;text-decoration:none}
           <div class="expo-grid" id="expo-grid"></div>
         </div>
 
+        <div class="expo-section">
+          <div class="section-header">
+            <h2>战役活动动态<span class="section-sub">数据来源：<a href="https://doc.weixin.qq.com/sheet/e3_AekADgYdAKkCNOJcAIbumTFe8Rc9q?scode=ALEAaAe2AA0PhHpFkAAewAsAasAJw&tab=000001" target="_blank" class="data-source-link">2026年Q3战役目标拆解 ↗</a></span></h2>
+          </div>
+          <div class="expo-grid" id="campaign-overview-grid"></div>
+        </div>
+
         <div class="section-header" style="margin-top:18px">
           <h2>品牌市场部工作项目<span class="section-sub">点击任一卡片查看详情</span></h2>
         </div>
@@ -829,20 +886,10 @@ a{color:inherit;text-decoration:none}
         </div>
         <div class="workline-grid" id="workline-grid"></div>
 
-        <div class="dashboard-row">
-          <div class="team-load-card">
-            <div class="section-header">
-              <h2>团队工作负载</h2>
-            </div>
-            <div class="team-load-list" id="team-load-list"></div>
-          </div>
-          <div class="today-todo-card">
-            <div class="section-header">
-              <h2>本周重点待办</h2>
-            </div>
-            <div id="today-todo-list"></div>
-          </div>
+        <div class="section-header" style="margin-top:24px">
+          <h2>本周重点待办<span class="section-sub">从项目看板自动聚合 · 按截止时间排序</span></h2>
         </div>
+        <div id="today-todo-list"></div>
 
         <div class="feedback-banner" onclick="window.open('https://docs.qq.com/smartsheet/DZGJ5bXFPT0tmd1Rx?_fid=dbymqOOKfwTq','_blank')">
           <div class="fb-icon">✦</div>
@@ -854,32 +901,67 @@ a{color:inherit;text-decoration:none}
         </div>
       </div>
 
-      <!-- ===== Kanban View ===== -->
-      <div class="view" id="view-kanban">
-        <div class="kanban-toolbar">
-          <button class="btn-primary" onclick="openTaskEditor()">+ 新增项目</button>
-          <button class="filter-btn active" onclick="filterKanban('all',this)">全部</button>
-          <button class="filter-btn" onclick="filterKanban('tob',this)">ToB展商服务</button>
-          <button class="filter-btn" onclick="filterKanban('toc',this)">ToC观众服务</button>
-          <button class="filter-btn" onclick="filterKanban('exp',this)">现场体验</button>
-          <button class="filter-btn" onclick="filterKanban('innov',this)">创新业务</button>
-          <button class="filter-btn" onclick="filterKanban('media',this)">自媒体内容</button>
-          <button class="filter-btn" onclick="filterKanban('kol',this)">达人BD</button>
-          <button class="filter-btn" onclick="filterKanban('city',this)">城市运营</button>
-          <button class="filter-btn" onclick="filterKanban('ad',this)">新媒体投放</button>
-          <div class="view-toggle">
-            <button class="active" onclick="toggleKanbanView('board',this)">看板</button>
-            <button onclick="toggleKanbanView('list',this)">列表</button>
+      <!-- ===== Project View (合并：工作清单 + 周报中心) ===== -->
+      <div class="view" id="view-project">
+        <div class="project-tabs">
+          <div class="project-tab active" data-pt="board" onclick="switchProjectTab('board',this)">
+            <span class="pt-icon">▤</span>项目看板<span class="pt-badge" id="pt-board-count">22</span>
           </div>
-          <div class="data-tools">
-            <button class="btn-secondary" onclick="exportData()" title="导出数据为 JSON 文件">📥 导出</button>
-            <button class="btn-secondary" onclick="document.getElementById('import-file').click()" title="从 JSON 文件导入数据">📤 导入</button>
+          <div class="project-tab" data-pt="list" onclick="switchProjectTab('list',this)">
+            <span class="pt-icon">≡</span>项目列表
+          </div>
+          <div class="project-tab" data-pt="report" onclick="switchProjectTab('report',this)">
+            <span class="pt-icon">◔</span>周报中心
+          </div>
+          <div class="project-tab" data-pt="month" onclick="switchProjectTab('month',this)">
+            <span class="pt-icon">▦</span>月度计划
+          </div>
+          <div class="project-tabs-tools">
+            <div class="week-nav" id="week-nav" style="display:flex">
+              <button class="btn-secondary" onclick="changeReportWeek(-1)">← 上周</button>
+              <span class="week-label" id="week-label">本周</span>
+              <button class="btn-secondary" onclick="changeReportWeek(1)">下周 →</button>
+            </div>
+            <button class="btn-secondary" onclick="exportData()">📥 导出</button>
+            <button class="btn-secondary" onclick="document.getElementById('import-file').click()">📤 导入</button>
             <input type="file" id="import-file" accept=".xlsx,.xls,.csv" style="display:none" onchange="importData(event)">
           </div>
         </div>
-        <div id="search-info" class="search-info" style="display:none"></div>
-        <div id="kanban-board" class="kanban-board"></div>
-        <div id="kanban-list" class="list-view" style="display:none"></div>
+
+        <!-- Board tab -->
+        <div class="project-pane" id="pane-board">
+          <div class="kanban-toolbar">
+            <button class="btn-primary" onclick="openTaskEditor()">+ 新增项目</button>
+            <button class="filter-btn active" onclick="filterKanban('all',this)">全部</button>
+            <button class="filter-btn" onclick="filterKanban('tob',this)">ToB展商服务</button>
+            <button class="filter-btn" onclick="filterKanban('toc',this)">ToC观众服务</button>
+            <button class="filter-btn" onclick="filterKanban('exp',this)">现场体验</button>
+            <button class="filter-btn" onclick="filterKanban('innov',this)">创新业务</button>
+            <button class="filter-btn" onclick="filterKanban('media',this)">自媒体内容</button>
+            <button class="filter-btn" onclick="filterKanban('kol',this)">达人BD</button>
+            <button class="filter-btn" onclick="filterKanban('city',this)">城市运营</button>
+            <button class="filter-btn" onclick="filterKanban('ad',this)">新媒体投放</button>
+          </div>
+          <div id="kanban-board" class="kanban-board"></div>
+        </div>
+
+        <!-- List tab -->
+        <div class="project-pane" id="pane-list" style="display:none">
+          <div id="kanban-list" class="list-view"></div>
+        </div>
+
+        <!-- Report tab (周报视图) -->
+        <div class="project-pane" id="pane-report" style="display:none">
+          <div style="background:#fffbeb;border:1px solid #f59e0b;padding:10px 14px;border-radius:6px;margin-bottom:14px;font-size:12px;color:#92400e">
+            💡 <b>周报即项目：</b>填写本周规划时，每行可勾选「转为项目」自动生成项目卡片，工作线自动继承该成员的工作主线。
+          </div>
+          <div id="report-content"></div>
+        </div>
+
+        <!-- Month tab (月度计划) -->
+        <div class="project-pane" id="pane-month" style="display:none">
+          <div id="month-content"></div>
+        </div>
       </div>
 
       <!-- ===== Task Editor Modal ===== -->
@@ -953,11 +1035,8 @@ a{color:inherit;text-decoration:none}
       </div>
 
       <!-- ===== Team View ===== -->
-      <div class="view" id="view-team">
-        <div class="section-header">
-          <h2>团队概览<span class="section-sub">点击成员卡片查看个人工作面板</span></h2>
-        </div>
-        <div class="team-grid" id="team-grid"></div>
+      <div class="view" id="view-team" style="display:none">
+        <!-- 团队视图已合并到工作日历/项目看板，此页保留隐藏以兼容历史链接 -->
       </div>
 
       <!-- ===== Metric Detail Modal ===== -->
@@ -968,6 +1047,81 @@ a{color:inherit;text-decoration:none}
             <span class="modal-close" onclick="closeMetricDetail()">✕</span>
           </div>
           <div class="modal-body" id="metric-detail-body"></div>
+        </div>
+      </div>
+
+      <!-- ===== Calendar View (工作日历) ===== -->
+      <div class="view" id="view-calendar">
+        <div class="calendar-toolbar">
+          <div class="cal-nav">
+            <button class="btn-secondary" onclick="changeCalWeek(-1)">← 上周</button>
+            <span class="cal-label" id="cal-label">本周</span>
+            <button class="btn-secondary" onclick="changeCalWeek(1)">下周 →</button>
+            <button class="btn-secondary" onclick="goToToday()">今天</button>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;margin-left:auto">
+            <button class="btn-primary" onclick="openEventEditor()">+ 新增日程</button>
+            <button class="btn-secondary" onclick="exportCalendar()">📥 导出</button>
+          </div>
+        </div>
+        <div style="background:#fef3c7;border:1px solid #fbbf24;padding:8px 12px;border-radius:6px;margin-bottom:12px;font-size:12px;color:#78350f">
+          🔒 企微日程API未授权（2026-08-03验证）。当前显示：① 项目截止（自动同步）+ ② 手动日程。授权企微后会自动同步全员真实日程。
+        </div>
+        <div class="calendar-grid" id="calendar-grid"></div>
+      </div>
+
+      <!-- ===== Event Editor Modal ===== -->
+      <div class="modal-mask" id="event-editor-modal" style="display:none">
+        <div class="modal-content task-editor-modal">
+          <div class="modal-header">
+            <h3>新增日程</h3>
+            <span class="modal-close" onclick="closeEventEditor()">✕</span>
+          </div>
+          <div class="modal-body">
+            <div class="form-row">
+              <div class="form-group">
+                <label>标题 *</label>
+                <input type="text" id="evt-title" placeholder="例：项目周会">
+              </div>
+              <div class="form-group">
+                <label>类型</label>
+                <select id="evt-type">
+                  <option value="meeting">会议</option>
+                  <option value="outing">外出</option>
+                  <option value="leave">请假</option>
+                  <option value="other">其他</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>日期 *</label>
+                <input type="date" id="evt-date">
+              </div>
+              <div class="form-group">
+                <label>时间</label>
+                <input type="text" id="evt-time" placeholder="例：14:00-16:00">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>成员</label>
+                <select id="evt-member"></select>
+              </div>
+              <div class="form-group">
+                <label>地点</label>
+                <input type="text" id="evt-location" placeholder="例：3楼会议室A">
+              </div>
+            </div>
+            <div class="form-group">
+              <label>备注</label>
+              <textarea id="evt-desc" rows="2" placeholder="可选"></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn-secondary" onclick="closeEventEditor()">取消</button>
+            <button class="btn-primary" onclick="saveEvent()">保存</button>
+          </div>
         </div>
       </div>
 
@@ -1131,26 +1285,8 @@ a{color:inherit;text-decoration:none}
         </div>
       </div>
 
-      <!-- ===== Report View ===== -->
-      <div class="view" id="view-report">
-        <div class="report-toolbar">
-          <div class="report-tabs">
-            <div class="report-tab active" onclick="switchReportTab('week',this)">本周周报</div>
-            <div class="report-tab" onclick="switchReportTab('month',this)">月度计划</div>
-          </div>
-          <div class="week-nav" id="week-nav">
-            <button class="btn-secondary" onclick="changeReportWeek(-1)">← 上周</button>
-            <span class="week-label" id="week-label">本周</span>
-            <button class="btn-secondary" onclick="changeReportWeek(1)">下周 →</button>
-          </div>
-          <div class="report-tools">
-            <button class="btn-secondary" onclick="exportReports()">📥 导出</button>
-            <button class="btn-secondary" onclick="document.getElementById('report-import-file').click()">📤 导入</button>
-            <input type="file" id="report-import-file" accept=".xlsx,.xls,.csv" style="display:none" onchange="importReports(event)">
-          </div>
-        </div>
-        <div id="report-content"></div>
-      </div>
+      <!-- ===== Report View (DEPRECATED, merged into view-project) ===== -->
+      <div class="view" id="view-report" style="display:none"></div>
 
       <!-- ===== Resource View ===== -->
       <div class="view" id="view-resource">
@@ -1310,6 +1446,20 @@ a{color:inherit;text-decoration:none}
           <div class="modal-body" style="padding:18px 22px;max-height:70vh;overflow-y:auto">
             <div class="dd-form-section">📋 基础信息</div>
             <div class="dd-form-grid">
+              <div class="dd-form-field">
+                <label>8大工作线 <span class="req">*</span></label>
+                <select id="dd-workline">
+                  <option value="">-- 请选择（决定归档分类） --</option>
+                  <option value="tob">ToB品牌宣传</option>
+                  <option value="toc">ToC品牌宣传</option>
+                  <option value="exp">现场体验优化</option>
+                  <option value="innov">创新业务拓展</option>
+                  <option value="media">自媒体与内容</option>
+                  <option value="kol">达人BD</option>
+                  <option value="city">城市运营</option>
+                  <option value="ad">新媒体投放</option>
+                </select>
+              </div>
               <div class="dd-form-field">
                 <label>需求来源 <span class="req">*</span></label>
                 <select id="dd-source">
@@ -1888,6 +2038,28 @@ function renderDashboard(){
       </div>
     </div>`;
   }).join('');
+
+  // 战役活动动态卡片 - 与全国展会动态统一格式
+  const c=d;
+  const campGrid=document.getElementById('campaign-overview-grid');
+  if(campGrid){
+    const m=c.metrics;
+    const timePct=m.timeProgress,revPct=m.revenueComplete,invPct=m.inviteComplete;
+    const campItems=[
+      {label:'时间进度',value:timePct+'%',cls:'time',sub:'',color:'blue',extra:`<div class="cb-bar"><div class="cb-fill" style="width:${timePct}%;background:var(--blue)"></div></div>`},
+      {label:'整体业绩完成',value:revPct+'%',cls:'rev',sub:`领先时间进度 ${(revPct-timePct).toFixed(1)} 个百分点`,color:'green',extra:`<div class="cb-bar"><div class="cb-fill" style="width:${revPct}%;background:var(--green)"></div></div>`},
+      {label:'邀约到场完成',value:invPct+'%',cls:'inv',sub:`缺口 ${(timePct-invPct).toFixed(1)} 个百分点`,color:'amber',extra:`<div class="cb-bar"><div class="cb-fill" style="width:${invPct}%;background:var(--amber)"></div></div>`},
+      {label:'领先分站',value:m.leadingBU,cls:'lead',sub:`${c.week} · ${c.date}`,color:'purple',extra:'<div style="font-size:11px;color:var(--purple-text);margin-top:6px">综合业绩+索票双指标领先</div>'}
+    ];
+    campGrid.innerHTML=campItems.map(it=>`
+      <div class="camp-card camp-${it.cls}">
+        <div class="ec-label"><span class="ec-dot"></span>${it.label}</div>
+        <div class="ec-count" style="color:var(--${it.color})">${it.value}</div>
+        ${it.extra}
+        ${it.sub?`<div style="font-size:11px;color:var(--text-3);margin-top:6px">${it.sub}</div>`:''}
+      </div>
+    `).join('');
+  }
 }
 
 /* ===== Render Kanban ===== */
@@ -1915,16 +2087,6 @@ function getFilteredTasks(){
 function renderKanban(){
   const filtered=getFilteredTasks();
 
-  const searchInfo=document.getElementById('search-info');
-  if(searchInfo){
-    if(searchQuery){
-      searchInfo.style.display='flex';
-      searchInfo.innerHTML=`<span>搜索 "<b>${searchQuery}</b>" 找到 <b>${filtered.length}</b> 条结果</span><span class="search-clear" onclick="clearSearch()">✕ 清除</span>`;
-    }else{
-      searchInfo.style.display='none';
-    }
-  }
-
   if(currentKanbanView==='board'){
     document.getElementById('kanban-board').style.display='grid';
     document.getElementById('kanban-list').style.display='none';
@@ -1945,21 +2107,23 @@ function renderKanban(){
       </div>`;
     }).join('');
   } else {
-    document.getElementById('kanban-board').style.display='none';
-    document.getElementById('kanban-list').style.display='block';
-    const list=document.getElementById('kanban-list');
-    if(filtered.length===0){
-      list.innerHTML=`<div class="no-results"><div class="nr-icon">🔍</div><div class="nr-text">没有找到匹配的项目</div><div class="nr-hint">试试其他关键词，或点击 ✕ 清除搜索</div></div>`;
-      return;
-    }
-    const wlOpts=Object.entries(WORKLINES).map(([k,w])=>`<option value="${k}" ${t=>t.wl===k?'selected':''}></option>`).join('');
-    list.innerHTML=`<div class="list-header">
+    renderKanbanList();
+  }
+}
+
+function renderKanbanList(){
+  const filtered=getFilteredTasks();
+  document.getElementById('kanban-board').style.display='none';
+  const list=document.getElementById('kanban-list');
+  list.style.display='block';
+  if(filtered.length===0){
+    list.innerHTML=`<div class="no-results"><div class="nr-icon">🔍</div><div class="nr-text">没有找到匹配的项目</div><div class="nr-hint">试试其他关键词，或点击 ✕ 清除搜索</div></div>`;
+    return;
+  }
+  list.innerHTML=`<div class="list-header">
       <div>工作线</div><div>事项</div><div>状态</div><div>负责人</div><div>进度</div><div>截止</div><div>交付文档</div><div>操作</div>
     </div>${filtered.map(t=>{
       const wl=WORKLINES[t.wl];const m=getMember(t.assignee);const st=STATUS_MAP[t.status];
-      const wlOptions=Object.entries(WORKLINES).map(([k,w])=>`<option value="${k}" ${t.wl===k?'selected':''}>${w.short}</option>`).join('');
-      const memberOptions=TEAM.map(mm=>`<option value="${mm.id}" ${t.assignee===mm.id?'selected':''}>${mm.name}</option>`).join('');
-      const statusOptions=Object.entries(STATUS_MAP).map(([k,s])=>`<option value="${k}" ${t.status===k?'selected':''}>${s.label}</option>`).join('');
       return `<div class="list-row" data-task-id="${t.id}">
         <div><span class="editable-cell wl-pill" style="background:${wl.tagColor.bg};color:${wl.tagColor.text}" onclick="editCell(${t.id},'wl',event)" data-value="${t.wl}">${wl.short}</span></div>
         <div><span class="editable-cell" onclick="editCell(${t.id},'title',event)" data-value="${escapeAttr(t.title)}" style="font-weight:500">${escapeHtml(t.title)}</span></div>
@@ -1971,7 +2135,27 @@ function renderKanban(){
         <div><span class="row-action-btn" onclick="openRowMenu(event,${t.id})">⋯</span></div>
       </div>`;
     }).join('')}`;
-  }
+}
+
+function renderMonth(){
+  const el=document.getElementById('month-content');
+  if(!el)return;
+  const monthTasks=TASKS.filter(t=>t.deadline!=='持续');
+  el.innerHTML=`<div class="report-section">
+    <div class="rs-header"><div class="rs-name">2026年8月 · 品牌市场部月度计划</div></div>
+    <div class="report-block">
+      <div class="rb-title">月度核心目标（从项目看板自动聚合）</div>
+      <ul class="rb-list">
+        ${monthTasks.filter(t=>t.status==='progress').slice(0,6).map(t=>`<li><span class="todo-tag" style="background:${WORKLINES[t.wl].tagColor.bg};color:${WORKLINES[t.wl].tagColor.text}">${WORKLINES[t.wl].short}</span> ${escapeHtml(t.title)}（负责人：${getMember(t.assignee).name}）</li>`).join('')}
+      </ul>
+    </div>
+    <div class="report-block">
+      <div class="rb-title">关键里程碑（按截止时间排序）</div>
+      <ul class="rb-list">
+        ${monthTasks.filter(t=>t.deadline>='2026-08-01'&&t.deadline<='2026-08-31').sort((a,b)=>a.deadline.localeCompare(b.deadline)).map(t=>`<li><b>${t.deadline}</b> — ${escapeHtml(t.title)}（${getMember(t.assignee).name}）</li>`).join('')||'<li style="color:var(--text-3)">暂无本月截止项目</li>'}
+      </ul>
+    </div>
+  </div>`;
 }
 
 function escapeAttr(s){return String(s||'').replace(/"/g,'&quot;')}
@@ -2095,7 +2279,7 @@ function openTaskEditor(taskId){
   const isEdit=!!taskId;
   document.getElementById('task-editor-title').textContent=isEdit?'编辑项目':'新增项目';
   const wlSel=document.getElementById('task-wl');
-  wlSel.innerHTML=Object.entries(WORKLINES).map(([k,w])=>`<option value="${k}">${w.name}</option>`).join('');
+  wlSel.innerHTML='<option value="">-- 请选择8大工作线 --</option>'+Object.entries(WORKLINES).map(([k,w])=>`<option value="${k}">${w.name}</option>`).join('')+'<option value="other">⚠ 其他（不属8大工作线，请标注）</option>';
   const memberSel=document.getElementById('task-assignee');
   memberSel.innerHTML=TEAM.map(m=>`<option value="${m.id}">${m.name}</option>`).join('');
 
@@ -2135,8 +2319,10 @@ function saveTask(){
   const id=document.getElementById('task-id').value;
   const title=document.getElementById('task-title').value.trim();
   if(!title){alert('请输入事项标题');return;}
+  const wlVal=document.getElementById('task-wl').value;
+  if(!wlVal){alert('请选择所属工作线（8大工作线之一）');return;}
   const data={
-    wl:document.getElementById('task-wl').value,
+    wl:wlVal,
     status:document.getElementById('task-status').value,
     title,
     desc:document.getElementById('task-desc').value.trim(),
@@ -2302,7 +2488,7 @@ function importData(evt){
       if(!confirm(`将导入 ${newTasks.length} 条项目数据，覆盖当前数据。继续？`))return;
       TASKS.length=0;
       newTasks.forEach(t=>TASKS.push(t));
-      saveTasks();renderKanban();renderDashboard();renderTeam();renderResources();
+      saveTasks();renderKanban();renderDashboard();renderResources();
       showToast(`已导入 ${newTasks.length} 条数据`);
     }catch(err){alert('导入失败：'+err.message);console.error(err);}
     evt.target.value='';
@@ -2374,6 +2560,195 @@ function renderTeam(){
 /* ===== Render Report ===== */
 let currentReportTab='week';
 let currentWeekOffset=0;
+let currentCalWeekOffset=0;
+let CAL_EVENTS=[];
+
+/* ===== Work Calendar Module ===== */
+function renderCalendar(){
+  const now=new Date();
+  const monday=new Date(now);
+  monday.setDate(now.getDate()-((now.getDay()+6)%7));
+  monday.setDate(monday.getDate()+currentCalWeekOffset*7);
+  const sunday=new Date(monday);sunday.setDate(monday.getDate()+6);
+  const days=[];for(let i=0;i<7;i++){const d=new Date(monday);d.setDate(monday.getDate()+i);days.push(d);}
+  const label=document.getElementById('cal-label');
+  if(label){
+    const m1=monday.getMonth()+1,d1=monday.getDate();
+    const m2=sunday.getMonth()+1,d2=sunday.getDate();
+    if(currentCalWeekOffset===0)label.textContent=`本周 · ${m1}.${d1} - ${m2}.${d2}`;
+    else if(currentCalWeekOffset===-1)label.textContent=`上周 · ${m1}.${d1} - ${m2}.${d2}`;
+    else if(currentCalWeekOffset===1)label.textContent=`下周 · ${m1}.${d1} - ${m2}.${d2}`;
+    else label.textContent=`${currentCalWeekOffset>0?'+':''}${currentCalWeekOffset}周 · ${m1}.${d1} - ${m2}.${d2}`;
+  }
+  const todayStr=now.toISOString().slice(0,10);
+  const grid=document.getElementById('calendar-grid');
+  if(!grid)return;
+  // header row
+  let html='<div class="cal-header-cell" style="background:var(--bg-page)"></div>';
+  days.forEach(d=>{
+    const ds=d.toISOString().slice(0,10);
+    const isToday=ds===todayStr;
+    const wk=['一','二','三','四','五','六','日'];
+    html+=`<div class="cal-header-cell ${isToday?'today':''}">
+      <div class="chd-week">周${wk[(d.getDay()+6)%7]}</div>
+      <div class="chd-date">${d.getMonth()+1}.${d.getDate()}</div>
+    </div>`;
+  });
+  // rows: 1 per team member
+  TEAM.forEach(m=>{
+    html+=`<div class="cal-row-header">
+      <div class="crh-avatar" style="background:${m.color}">${getInitials(m.name)}</div>
+      <div class="crh-info"><div class="crh-name">${m.name}</div><div class="crh-role">${m.role}</div></div>
+    </div>`;
+    days.forEach(d=>{
+      const ds=d.toISOString().slice(0,10);
+      const isToday=ds===todayStr;
+      // 自动从项目截止+手动日程收集事件
+      const events=[];
+      // 1. 项目截止
+      TASKS.filter(t=>t.assignee===m.id&&t.deadline===ds).forEach(t=>{
+        events.push({type:'task',title:t.title,wl:t.wl,time:'截止',isAuto:true,id:'task-'+t.id});
+      });
+      // 2. 手动日程
+      CAL_EVENTS.filter(e=>e.member===m.id&&e.date===ds).forEach(e=>{
+        events.push({type:e.type||'meeting',title:e.title,time:e.time||'',location:e.location,desc:e.desc,id:'evt-'+e.id,isAuto:false});
+      });
+      // 按时间排序：手动日程优先（有时间），后截止（无时间）
+      events.sort((a,b)=>{
+        if(a.time&&b.time)return a.time.localeCompare(b.time);
+        if(a.time)return -1;
+        if(b.time)return 1;
+        return 0;
+      });
+      const cellsHtml=events.map(e=>{
+        const wl=e.wl?WORKLINES[e.wl]:null;
+        const wlColor=wl?wl.tagColor.dot:'';
+        return `<div class="cal-event ${e.type}" style="${wlColor?'border-left-color:'+wlColor:''}" onclick="editEvent('${e.id}',${e.isAuto})" title="${escapeAttr(e.title)}${e.location?' · '+escapeAttr(e.location):''}">
+          <div class="ce-time">${escapeHtml(e.time||'截止')}</div>
+          <div class="ce-title">${escapeHtml(e.title)}</div>
+        </div>`;
+      }).join('');
+      html+=`<div class="cal-cell ${isToday?'today':''}" ondblclick="quickAddEvent('${m.id}','${ds}')">
+        ${events.length?cellsHtml:'<div class="cal-cell-empty">—</div>'}
+      </div>`;
+    });
+  });
+  grid.innerHTML=html;
+  // 更新导航徽章
+  const totalEvents=eventsCount();
+  const navBadge=document.getElementById('nav-calendar-count');
+  if(navBadge)navBadge.textContent=totalEvents>0?totalEvents:'—';
+}
+
+function eventsCount(){
+  // 计算本周所有事件
+  const now=new Date();
+  const monday=new Date(now);
+  monday.setDate(now.getDate()-((now.getDay()+6)%7));
+  monday.setDate(monday.getDate()+currentCalWeekOffset*7);
+  const sunday=new Date(monday);sunday.setDate(monday.getDate()+6);
+  let cnt=0;
+  for(let d=new Date(monday);d<=sunday;d.setDate(d.getDate()+1)){
+    const ds=d.toISOString().slice(0,10);
+    cnt+=CAL_EVENTS.filter(e=>e.date===ds).length;
+    cnt+=TASKS.filter(t=>t.deadline===ds).length;
+  }
+  return cnt;
+}
+
+function changeCalWeek(offset){
+  currentCalWeekOffset+=offset;
+  renderCalendar();
+}
+
+function goToToday(){
+  currentCalWeekOffset=0;
+  renderCalendar();
+}
+
+function quickAddEvent(memberId,dateStr){
+  document.getElementById('evt-member').value=memberId;
+  document.getElementById('evt-date').value=dateStr;
+  document.getElementById('evt-title').focus();
+  openEventEditor();
+}
+
+function openEventEditor(){
+  const sel=document.getElementById('evt-member');
+  if(sel.options.length===0){
+    sel.innerHTML=TEAM.map(m=>`<option value="${m.id}">${m.name}</option>`).join('');
+  }
+  const today=new Date().toISOString().slice(0,10);
+  if(!document.getElementById('evt-date').value)document.getElementById('evt-date').value=today;
+  document.getElementById('event-editor-modal').style.display='flex';
+}
+
+function closeEventEditor(){
+  document.getElementById('event-editor-modal').style.display='none';
+  ['evt-title','evt-time','evt-location','evt-desc'].forEach(id=>document.getElementById(id).value='');
+}
+
+let editingEventId=null;
+
+function editEvent(evtId,isAuto){
+  if(isAuto)return; // 自动事件不可编辑
+  const id=parseInt(evtId.replace('evt-',''));
+  const evt=CAL_EVENTS.find(e=>e.id===id);
+  if(!evt)return;
+  editingEventId=id;
+  document.getElementById('evt-title').value=evt.title;
+  document.getElementById('evt-type').value=evt.type||'meeting';
+  document.getElementById('evt-date').value=evt.date;
+  document.getElementById('evt-time').value=evt.time||'';
+  document.getElementById('evt-member').value=evt.member;
+  document.getElementById('evt-location').value=evt.location||'';
+  document.getElementById('evt-desc').value=evt.desc||'';
+  openEventEditor();
+}
+
+function saveEvent(){
+  const title=document.getElementById('evt-title').value.trim();
+  const date=document.getElementById('evt-date').value;
+  if(!title||!date){alert('请填写标题和日期');return;}
+  const evt={
+    title,
+    type:document.getElementById('evt-type').value,
+    date,
+    time:document.getElementById('evt-time').value.trim(),
+    member:document.getElementById('evt-member').value,
+    location:document.getElementById('evt-location').value.trim(),
+    desc:document.getElementById('evt-desc').value.trim(),
+    updatedAt:new Date().toISOString()
+  };
+  if(editingEventId){
+    const idx=CAL_EVENTS.findIndex(e=>e.id===editingEventId);
+    if(idx>=0)CAL_EVENTS[idx]={...CAL_EVENTS[idx],...evt};
+  } else {
+    evt.id=Date.now();
+    evt.createdAt=new Date().toISOString();
+    CAL_EVENTS.push(evt);
+  }
+  localStorage.setItem('wb_cal_events',JSON.stringify(CAL_EVENTS));
+  editingEventId=null;
+  closeEventEditor();
+  renderCalendar();
+}
+
+function exportCalendar(){
+  const dataStr=JSON.stringify({version:'1.0',exportedAt:new Date().toISOString(),events:CAL_EVENTS},null,2);
+  const blob=new Blob([dataStr],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=`work-calendar-${new Date().toISOString().slice(0,10)}.json`;
+  a.click();URL.revokeObjectURL(url);
+}
+
+function loadCalendarEvents(){
+  try{
+    const data=localStorage.getItem('wb_cal_events');
+    if(data)CAL_EVENTS=JSON.parse(data);
+  }catch(e){console.error('加载日程失败:',e);}
+}
 
 function getWeekKey(offset){
   const now=new Date();
@@ -2728,11 +3103,10 @@ function switchView(view,el){
   if(el)el.classList.add('active');
   const titles={
     dashboard:['仪表盘首页','全局概览'],
-    kanban:['工作清单','项目看板管理'],
-    team:['团队视图','成员工作面板'],
+    project:['项目看板','项目 · 周报 · 月度计划'],
+    calendar:['工作日历','团队时间轴 · 会议/任务/截止'],
     meeting:['会议室预定','会议日程管理'],
     campaign:['战役看板','Q3战役数据'],
-    report:['周报中心','工作汇报与计划'],
     resource:['资料中心','交付物文档库'],
     'design-demand':['设计需求','多视图设计需求管理']
   };
@@ -2741,6 +3115,25 @@ function switchView(view,el){
   if(view==='design-demand')renderDesignDemand();
   if(view==='meeting')renderMeeting();
   if(view==='campaign')renderCampaign();
+  if(view==='project')renderProject();
+  if(view==='calendar')renderCalendar();
+}
+
+/* ===== Project View (合并工作清单+周报) ===== */
+let currentProjectTab='board';
+function switchProjectTab(tab,el){
+  currentProjectTab=tab;
+  document.querySelectorAll('.project-tab').forEach(t=>t.classList.remove('active'));
+  if(el)el.classList.add('active');
+  document.querySelectorAll('.project-pane').forEach(p=>p.style.display='none');
+  document.getElementById('pane-'+tab).style.display='block';
+  if(tab==='board')renderKanban();
+  else if(tab==='list')renderKanbanList();
+  else if(tab==='report')renderReport();
+  else if(tab==='month')renderMonth();
+}
+function renderProject(){
+  switchProjectTab(currentProjectTab,document.querySelector('.project-tab[data-pt="'+currentProjectTab+'"]'));
 }
 
 /* ===== Meeting Module ===== */
@@ -3211,6 +3604,7 @@ function openDemandEditor(id){
   if(!isNew){
     const d=DESIGN_DEMANDS.find(x=>x.id===id);
     if(!d)return;
+    document.getElementById('dd-workline').value=d.workline||'';
     document.getElementById('dd-source').value=d.source||'品牌市场部';
     document.getElementById('dd-requester').value=d.requester||'';
     document.getElementById('dd-category').value=d.category||'品牌传播';
@@ -3224,6 +3618,7 @@ function openDemandEditor(id){
     document.getElementById('dd-previewurl').value=d.previewUrl||'';
     document.getElementById('dd-sourcefile').value=d.sourceFileUrl||'';
   }else{
+    document.getElementById('dd-workline').value='';
     document.getElementById('dd-source').value='品牌市场部';
     document.getElementById('dd-requester').value='';
     document.getElementById('dd-category').value='品牌传播';
@@ -3263,7 +3658,13 @@ function saveDemand(){
     showToast('请选择交付时间','error');
     return;
   }
+  const workline=document.getElementById('dd-workline').value;
+  if(!workline){
+    showToast('请选择8大工作线之一（否则无法归档分类）','error');
+    return;
+  }
   const data={
+    workline,
     source:document.getElementById('dd-source').value,
     category:document.getElementById('dd-category').value,
     subCategory:document.getElementById('dd-subcategory').value.trim(),
@@ -4131,10 +4532,10 @@ function init(){
   renderDashboard();
   renderExpoGrid();
   renderKanban();
-  renderTeam();
   renderMeeting();
   renderCampaign();
-  renderReport();
+  loadCalendarEvents();
+  renderCalendar();
   renderResources();
 
   document.getElementById('nav-kanban-count').textContent=TASKS.filter(t=>t.status==='progress').length;
