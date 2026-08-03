@@ -359,6 +359,10 @@ a{color:inherit;text-decoration:none}
 .qr-title,.auth-title,.tips-title{font-size:13px;font-weight:600;margin-bottom:12px;text-align:center}
 .qr-img{width:100%;max-width:240px;display:block;margin:0 auto;border-radius:var(--radius-sm)}
 .qr-hint{font-size:11px;color:var(--text-3);text-align:center;margin-top:10px}
+.qr-action-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 18px;background:linear-gradient(135deg,var(--blue),#4f46e5);color:#fff;border-radius:var(--radius-sm);font-size:14px;font-weight:600;text-decoration:none;transition:all .2s;margin:8px 0 4px;box-shadow:0 2px 8px rgba(59,130,246,.25)}
+.qr-action-btn:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(59,130,246,.35);color:#fff}
+.qr-action-btn:active{transform:translateY(0)}
+.qr-action-btn svg{flex-shrink:0}
 .auth-card{text-align:center}
 .auth-icon{font-size:32px;margin-bottom:10px;color:var(--amber)}
 .auth-desc{font-size:12px;color:var(--text-2);margin-bottom:12px;line-height:1.6;text-align:left}
@@ -1028,9 +1032,21 @@ a{color:inherit;text-decoration:none}
 
           <div class="meeting-sidebar">
             <div class="qr-card">
-              <div class="qr-title">扫码快速预定</div>
-              <img src="meeting-qr.jpg" alt="会议室预定二维码" class="qr-img">
-              <div class="qr-hint">微信扫码 → 打开会议室预定</div>
+              <div class="qr-title">会议室预定</div>
+              <a href="https://meeting.huamo.cn/meeting" target="_blank" rel="noopener" class="qr-action-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                  <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"></path>
+                </svg>
+                <span>点击预定会议室</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 17L17 7M17 7H7M17 7v10"></path>
+                </svg>
+              </a>
+              <div class="qr-hint">meeting.huamo.cn/meeting</div>
             </div>
 
             <div class="auth-card" id="auth-card">
