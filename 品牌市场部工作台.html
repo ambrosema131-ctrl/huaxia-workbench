@@ -70,14 +70,15 @@ a{color:inherit;text-decoration:none}
 .expo-card.next-week .ec-dot{background:var(--purple)}
 .expo-card.month-done .ec-dot{background:var(--green)}
 .expo-card .ec-count{font-size:24px;font-weight:700;margin-bottom:8px}
-.expo-card .ec-cities{display:flex;flex-wrap:wrap;gap:5px}
-.expo-card .ec-city{font-size:12px;padding:3px 10px;border-radius:12px;font-weight:500;white-space:nowrap}
+.expo-card .ec-cities{display:flex;flex-wrap:wrap;gap:6px}
+.expo-card .ec-city{font-size:12px;padding:5px 10px;border-radius:12px;font-weight:500;display:flex;flex-direction:column;align-items:flex-start;line-height:1.35}
 .expo-card.past-week .ec-city{background:var(--gray-bg);color:var(--gray-text)}
 .expo-card.this-week .ec-city{background:var(--blue-bg);color:var(--blue-text)}
 .expo-card.next-week .ec-city{background:var(--purple-bg);color:var(--purple-text)}
 .expo-card.month-done .ec-city{background:var(--green-bg);color:var(--green-text)}
 .expo-card .ec-empty{font-size:12px;color:var(--text-3);padding:8px 0}
 .expo-card .ec-date{font-size:11px;color:var(--text-3);margin-top:2px}
+.expo-card .ec-contact{font-size:10px;color:var(--text-3);margin-top:3px;display:flex;align-items:center;gap:3px}
 .expo-card .ec-city.ec-tentative{border:1px dashed var(--amber);background:var(--amber-bg)!important}
 .expo-card .ec-status{display:inline-block;font-size:9px;padding:1px 4px;border-radius:4px;background:var(--amber);color:#fff;margin-left:4px;font-weight:600;vertical-align:middle}
 
@@ -845,7 +846,7 @@ a{color:inherit;text-decoration:none}
       <div class="view active" id="view-dashboard">
         <div class="expo-section">
           <div class="section-header">
-            <h2>全国展会动态<span class="section-sub">根据当前日期自动分类 · 数据来源：<a href="https://doc.weixin.qq.com/sheet/e3_AfQADgYdAKkCNtZlTLhspScSpp7zZ?scode=ALEAaAe2AA0dLEO9IWAewAsAasAJw&tab=BB08J2" target="_blank" class="data-source-link">全国展会信息汇总表 ↗</a></span></h2>
+            <h2>全国展会动态<span class="section-sub">根据当前日期自动分类 · 数据来源：<a href="https://doc.weixin.qq.com/sheet/e3_AfQADgYdAKkCNtZlTLhspScSpp7zZ?scode=ALEAaAe2AA0dLEO9IWAewAsAasAJw&tab=BB08J2" target="_blank" class="data-source-link">全国展会信息汇总表 ↗</a> · <a href="https://doc.weixin.qq.com/sheet/e3_AfQADgYdAKkCNChfbnCQ0Q9i5TO8P?scode=ALEAaAe2AA0LLaVFrpAfQADgYdAKk&tab=pj5ajt" target="_blank" class="data-source-link">中台部门&amp;全国BU运营对接 ↗</a></span></h2>
           </div>
           <div class="expo-grid" id="expo-grid"></div>
         </div>
@@ -1927,6 +1928,27 @@ const EXPO_DATA=[
   {city:'长春',date:'2026-12-25',endDate:'2026-12-17',bu:'北京东北BU',edition:'3届',status:'暂定'},
 ];
 
+/* ===== BU → 品牌市场对接人（来源：中台部门&全国BU运营对接表） ===== */
+const BU_CONTACT={
+  '上海BU':'施宇豪',
+  '广东BU':'刘永芳',
+  '北京东北BU':'施宇豪',
+  '川渝BU':'薛易',
+  '苏北BU':'刘永芳',
+  '西北BU':'江波',
+  '津冀BU':'施宇豪',
+  '浙江BU':'吴姬睿',
+  '苏南BU':'潘科元',
+  '鲁豫BU':'薛易',
+  '福建BU':'刘永芳',
+  '鄂赣湘BU':'马乐',
+  '鄂湘赣BU':'马乐',
+  '滇黔桂BU':'范振',
+  '大客户BU':'李凤麟',
+  '上海':'施宇豪'
+};
+function getBuContact(bu){return BU_CONTACT[bu]||'待分配';}
+
 function renderExpoGrid(){
   const now=new Date();
   now.setHours(0,0,0,0);
@@ -1964,7 +1986,11 @@ function renderExpoGrid(){
     return end>=monthStart&&end<today;
   });
 
-  const fmtCityList=(list)=>list.map(e=>{const tentative=e.status==='暂定';return `<span class="ec-city${tentative?' ec-tentative':''}">${e.city}${tentative?'<span class="ec-status">暂定</span>':''}<span class="ec-date">${e.date.slice(5).replace('-','.')}-${e.endDate.slice(5).replace('-','.')}</span></span>`}).join('');
+  const fmtCityList=(list)=>list.map(e=>{
+    const tentative=e.status==='暂定';
+    const contact=getBuContact(e.bu);
+    return `<span class="ec-city${tentative?' ec-tentative':''}">${e.city}${tentative?'<span class="ec-status">暂定</span>':''}<span class="ec-date">${e.date.slice(5).replace('-','.')}-${e.endDate.slice(5).replace('-','.')}</span><span class="ec-contact"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>对接：${contact}</span></span>`
+  }).join('');
   const emptyHtml='<div class="ec-empty">暂无展会</div>';
 
   document.getElementById('expo-grid').innerHTML=`
