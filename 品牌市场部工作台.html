@@ -3973,27 +3973,29 @@ function showToast(msg,type){
 
 /* ===== Campaign Module ===== */
 const CAMPAIGN_DATA={
-  quarter:'Q3',week:'七月第四周',date:'7月28日',
-  metrics:{timeProgress:30.43,revenueComplete:39.2,inviteComplete:18,leadingBU:'鄂赣湘'},
-  conclusion:'Q3整体业绩完成率39.2%，领先时间进度8.77个百分点；但邀约到场完成率仅18%，与30.43%的时间进度相比仍有12.43个百分点缺口，需把"索票—邀约—到场"转化作为本周第一优先级。',
+  quarter:'Q3',week:'七月第四周',date:'8月4日',
+  metrics:{timeProgress:36.96,revenueComplete:46.34,inviteComplete:21.5,leadingBU:'北京东北'},
+  conclusion:'Q3整体业绩完成46.34%，累计6,149.87万元，领先时间进度9.38个百分点；利润完成12.42%仍需加速兑现。邀约到场完成率21.5%，与36.96%的时间进度相比仍有15.46个百分点缺口，需把"索票—邀约—到场"转化作为本周第一优先级。',
   analysis:[
-    {label:'领先面',text:'鄂赣湘暂列第一，领先分站继续扩大战果；落后分站必须明确追赶动作与日目标'},
-    {label:'市场面',text:'总目标52万到场，当前到场93,870；目标同时要求到场成本同比下降10%，后续增量必须兼顾规模与效率'},
-    {label:'城市面',text:'武汉索票完成96%、东莞82%、南昌66%；本周昆明、长沙在邀约效率与爆品预约上仍需加速'},
-    {label:'素材面',text:'昆明、长沙新素材成本均优于老素材，新素材消耗占比仍有提升空间，应加快复制和扩量'}
+    {label:'领先面',text:'北京东北BU目完成排名第一，上海业绩额第一；津冀与川渝PK最胶着，仅相差4.46%'},
+    {label:'市场面',text:'整体业绩6,149.87万元，领先时间进度9.38个百分点；利润完成12.42%，仍需加速兑现'},
+    {label:'城市面',text:'昆明站效果爆棚！有效率46%、新客户接通率75%、加粉率22%；长沙有效率43%、接通率78%、加粉率18%'},
+    {label:'素材面',text:'昆明新素材消耗占比60.15%、索票成本低于老素材3.01元；长沙42.83%、低于4.97元，应加快复制扩量'}
   ],
   actions:[
-    {priority:'P0',action:'确认创新奖11个课题的审核时间、入选口径及首轮名单',owner:'马江龙',deadline:'7月28日',criteria:'形成清单并同步7个申报BU'},
-    {priority:'P0',action:'昆明、长沙提高本地推占比，补充私信与团购链路',owner:'马乐',deadline:'7月28日',criteria:'给出预算迁移比例及预计索票增量'},
+    {priority:'P0',action:'确认创新奖11个课题的审核时间、首轮入选名单',owner:'马江龙',deadline:'8月6日',criteria:'形成清单并同步7个申报BU'},
+    {priority:'P0',action:'昆明、长沙提高本地推占比，补充私信与团购链路',owner:'马乐',deadline:'8月6日',criteria:'给出预算迁移比例及预计索票增量'},
     {priority:'P0',action:'明确裂变小程序本周版本范围与上线节点',owner:'刘永芳',deadline:'本周',criteria:'形成版本清单、上线时间、提升预估'},
-    {priority:'P1',action:'昆明、长沙爆品补量与优秀爆品复用',owner:'马江龙',deadline:'7月29日',criteria:'每城补充上线量及预约目标'}
+    {priority:'P1',action:'昆明、长沙爆品补量与优秀爆品复用',owner:'马江龙',deadline:'8月7日',criteria:'每城补充上线量及预约目标'}
   ],
   cities:[
     {city:'武汉',edition:38,date:'7.24-26',status:'ended',ticketTarget:751,ticketDone:719,ticketPct:95.7,attend:296,attendPct:41.2,bpOnline:70,bpBook:2133,bpTarget:900,bpPct:237,orders:931,revenue:'656万',revenuePct:99.2},
     {city:'南昌',edition:30,date:'7.24-26',status:'ended',ticketTarget:884,ticketDone:587,ticketPct:66.4,attend:280,attendPct:47.7,bpOnline:60,bpBook:1248,bpTarget:1500,bpPct:83.2,orders:928,revenue:'634万',revenuePct:87.8},
     {city:'东莞',edition:27,date:'7.24-26',status:'ended',ticketTarget:1006,ticketDone:824,ticketPct:81.9,attend:307,attendPct:37.3,bpOnline:157,bpBook:2458,bpTarget:1275,bpPct:192.8,orders:2042,revenue:'662万',revenuePct:93.5},
-    {city:'昆明',edition:33,date:'7.31-8.2',status:'upcoming',ticketTarget:1103,ticketDone:707,ticketPct:64.1,attend:0,attendPct:0,bpOnline:40,bpBook:608,bpTarget:1200,bpPct:50.7,orders:540,revenue:'—',revenuePct:0},
-    {city:'长沙',edition:3,date:'7.31-8.2',status:'upcoming',ticketTarget:452,ticketDone:173,ticketPct:38.3,attend:0,attendPct:0,bpOnline:53,bpBook:249,bpTarget:500,bpPct:49.8,orders:747,revenue:'—',revenuePct:0}
+    {city:'昆明',edition:33,date:'7.31-8.2',status:'ended',ticketTarget:1103,ticketDone:707,ticketPct:64.1,attend:0,attendPct:0,bpOnline:40,bpBook:608,bpTarget:1200,bpPct:50.7,orders:540,revenue:'—',revenuePct:0},
+    {city:'长沙',edition:3,date:'7.31-8.2',status:'ended',ticketTarget:452,ticketDone:173,ticketPct:38.3,attend:0,attendPct:0,bpOnline:53,bpBook:249,bpTarget:500,bpPct:49.8,orders:747,revenue:'—',revenuePct:0},
+    {city:'上海',edition:68,date:'8.7-9',status:'upcoming',ticketTarget:0,ticketDone:0,ticketPct:0,attend:0,attendPct:0,bpOnline:0,bpBook:0,bpTarget:0,bpPct:0,orders:0,revenue:'—',revenuePct:0},
+    {city:'青岛',edition:38,date:'8.7-9',status:'upcoming',ticketTarget:0,ticketDone:0,ticketPct:0,attend:0,attendPct:0,bpOnline:0,bpBook:0,bpTarget:0,bpPct:0,orders:0,revenue:'—',revenuePct:0}
   ]
 };
 
