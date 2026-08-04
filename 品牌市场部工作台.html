@@ -4037,13 +4037,13 @@ const Q3_GOALS={
   },
   bp:{
     label:'爆品预约数据',
-    total:null,
+    total:8365,
     cities:[
-      {name:'上海',edition:68,value:null},
-      {name:'青岛',edition:38,value:null}
+      {name:'上海',edition:68,value:7839},
+      {name:'青岛',edition:38,value:526}
     ],
-    updated:'—',
-    source:'数据源待接入'
+    updated:'2026-08-04',
+    source:'华夏后台 · 近三月 · 商品订单数据'
   }
 };
 
@@ -4052,7 +4052,7 @@ function renderQ3Goals(){
   const el=document.getElementById('q3-goal-grid');
   if(!el) return;
   const ticketChips=g.ticket.cities.map(c=>`<span class="qg-chip">${c.name}${c.edition}届 · ${c.value.toLocaleString()} 条</span>`).join('');
-  const bpChips=g.bp.cities.map(c=>`<span class="qg-chip">${c.name}${c.edition}届 · —</span>`).join('');
+  const bpChips=g.bp.cities.map(c=>`<span class="qg-chip">${c.name}${c.edition}届 · ${c.value.toLocaleString()} 条</span>`).join('');
   el.innerHTML=`
     <div class="q3-goal-card goal-ticket">
       <div class="qg-label"><span class="qg-dot"></span>${g.ticket.label}</div>
@@ -4063,10 +4063,10 @@ function renderQ3Goals(){
     </div>
     <div class="q3-goal-card goal-bp">
       <div class="qg-label"><span class="qg-dot"></span>${g.bp.label}</div>
-      <div class="qg-value" style="color:var(--coral)">—</div>
-      <div class="qg-empty">${g.bp.source}，请提供数据后替换</div>
+      <div class="qg-value" style="color:var(--coral)">${g.bp.total.toLocaleString()} <span style="font-size:14px;font-weight:500;color:var(--text-2)">条</span></div>
+      <div class="qg-sub">已接入：${g.bp.source}</div>
       <div class="qg-breakdown">${bpChips}</div>
-      <div class="qg-meta"><span>数据更新：${g.bp.updated}</span></div>
+      <div class="qg-meta"><span>数据更新：${g.bp.updated}</span><span class="dot"></span><span>覆盖 ${g.bp.cities.length} 城本周展会</span></div>
     </div>
   `;
 }
