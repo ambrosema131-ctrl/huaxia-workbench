@@ -332,11 +332,15 @@ a{color:inherit;text-decoration:none}
 .q3-goal-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
 .q3-goal-card.goal-ticket::before{background:var(--blue)}
 .q3-goal-card.goal-bp::before{background:var(--coral)}
+.q3-goal-card.goal-ticket-next::before{background:var(--amber)}
+.q3-goal-card.goal-bp-next::before{background:var(--amber)}
 .q3-goal-card:hover{border-color:var(--border-strong);box-shadow:0 4px 12px rgba(0,0,0,.08);transform:translateY(-1px)}
 .q3-goal-card .qg-label{font-size:12px;color:var(--text-3);font-weight:500;margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .q3-goal-card .qg-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
 .q3-goal-card.goal-ticket .qg-dot{background:var(--blue)}
 .q3-goal-card.goal-bp .qg-dot{background:var(--coral)}
+.q3-goal-card.goal-ticket-next .qg-dot{background:var(--amber)}
+.q3-goal-card.goal-bp-next .qg-dot{background:var(--amber)}
 .q3-goal-card .qg-value{font-size:32px;font-weight:700;line-height:1.1}
 .q3-goal-card .qg-sub{font-size:12px;color:var(--text-2);margin-top:8px}
 .q3-goal-card .qg-empty{font-size:12px;color:var(--text-3);font-style:italic;margin-top:8px}
@@ -344,6 +348,7 @@ a{color:inherit;text-decoration:none}
 .q3-goal-card .qg-chip{font-size:11px;padding:5px 10px;border-radius:12px;background:var(--bg-soft);color:var(--text-2)}
 .q3-goal-card.goal-ticket .qg-chip{background:var(--blue-bg);color:var(--blue-text)}
 .q3-goal-card.goal-bp .qg-chip{background:var(--coral-bg);color:var(--coral-text)}
+.q3-goal-card.goal-ticket-next .qg-chip,.q3-goal-card.goal-bp-next .qg-chip{background:var(--amber-bg);color:var(--amber-text)}
 .q3-goal-card .qg-chip.next-week{background:var(--amber-bg);color:var(--amber-text)}
 .q3-goal-card .qg-next-week-label{font-size:12px;color:var(--text-2);font-weight:500;margin-top:16px;margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .q3-goal-card .qg-dot.next-week{background:var(--amber)}
@@ -4035,30 +4040,42 @@ const Q3_GOALS={
       {name:'上海',edition:68,value:1414},
       {name:'青岛',edition:38,value:335}
     ],
-    nextWeekCities:[
-      {name:'南宁',edition:16,value:0},
-      {name:'台州',edition:9,value:0},
-      {name:'兰州',edition:4,value:0},
-      {name:'芜湖',edition:5,value:0}
-    ],
     updated:'2026-08-04',
     source:'华夏后台 · 近30天 · 新媒体+运营免费渠道'
   },
   bp:{
     label:'爆品预约数据',
-    total:8365,
+    total:8816,
     cities:[
-      {name:'上海',edition:68,value:7839},
-      {name:'青岛',edition:38,value:526}
+      {name:'上海',edition:68,value:8300},
+      {name:'青岛',edition:38,value:516}
     ],
-    nextWeekCities:[
+    updated:'2026-08-05',
+    source:'华夏后台 · 近三月 · 商品订单数据'
+  },
+  nextTicket:{
+    label:'下周索票目标',
+    total:4937,
+    cities:[
+      {name:'南宁',edition:16,value:1105},
+      {name:'台州',edition:9,value:1370},
+      {name:'兰州',edition:4,value:354},
+      {name:'芜湖',edition:5,value:2108}
+    ],
+    updated:'2026-08-05',
+    source:'战役早会同步 · 索票目标'
+  },
+  nextBp:{
+    label:'下周爆品预约',
+    total:0,
+    cities:[
       {name:'南宁',edition:16,value:0},
       {name:'台州',edition:9,value:0},
       {name:'兰州',edition:4,value:0},
       {name:'芜湖',edition:5,value:0}
     ],
-    updated:'2026-08-04',
-    source:'华夏后台 · 近三月 · 商品订单数据'
+    updated:'2026-08-05',
+    source:'战役早会同步 · 爆品尚未上线'
   }
 };
 
@@ -4068,30 +4085,36 @@ function renderQ3Goals(){
   if(!el) return;
   const ticketChips=g.ticket.cities.map(c=>`<span class="qg-chip">${c.name}${c.edition}届 · ${c.value.toLocaleString()} 条</span>`).join('');
   const bpChips=g.bp.cities.map(c=>`<span class="qg-chip">${c.name}${c.edition}届 · ${c.value.toLocaleString()} 条</span>`).join('');
-  const nextTicketChips=g.ticket.nextWeekCities.length
-    ? g.ticket.nextWeekCities.map(c=>`<span class="qg-chip next-week">${c.name}${c.edition}届 · ${c.value.toLocaleString()} 条</span>`).join('')
-    : '<span class="qg-empty">暂无下周开办城市</span>';
-  const nextBpChips=g.bp.nextWeekCities.length
-    ? g.bp.nextWeekCities.map(c=>`<span class="qg-chip next-week">${c.name}${c.edition}届 · ${c.value.toLocaleString()} 条</span>`).join('')
-    : '<span class="qg-empty">暂无下周开办城市</span>';
+  const nextTicketChips=g.nextTicket.cities.map(c=>`<span class="qg-chip next-week">${c.name}${c.edition}届 · 目标 ${c.value.toLocaleString()} 条</span>`).join('');
+  const nextBpChips=g.nextBp.cities.map(c=>`<span class="qg-chip next-week">${c.name}${c.edition}届 · ${c.value>0?c.value.toLocaleString()+' 条':'未上线'}</span>`).join('');
   el.innerHTML=`
     <div class="q3-goal-card goal-ticket">
-      <div class="qg-label"><span class="qg-dot"></span>${g.ticket.label}</div>
+      <div class="qg-label"><span class="qg-dot"></span>${g.ticket.label} · 本周开办</div>
       <div class="qg-value" style="color:var(--blue)">${g.ticket.total.toLocaleString()} <span style="font-size:14px;font-weight:500;color:var(--text-2)">条</span></div>
       <div class="qg-sub">已接入：${g.ticket.source}</div>
       <div class="qg-breakdown">${ticketChips}</div>
-      <div class="qg-next-week-label"><span class="qg-dot next-week"></span>下周开办（不含暂定）</div>
-      <div class="qg-breakdown next-week">${nextTicketChips}</div>
-      <div class="qg-meta"><span>数据更新：${g.ticket.updated}</span><span class="dot"></span><span>本周 ${g.ticket.cities.length} 城 · 下周 ${g.ticket.nextWeekCities.length} 城</span></div>
+      <div class="qg-meta"><span>数据更新：${g.ticket.updated}</span><span class="dot"></span><span>本周 ${g.ticket.cities.length} 城</span></div>
     </div>
     <div class="q3-goal-card goal-bp">
-      <div class="qg-label"><span class="qg-dot"></span>${g.bp.label}</div>
+      <div class="qg-label"><span class="qg-dot"></span>${g.bp.label} · 本周开办</div>
       <div class="qg-value" style="color:var(--coral)">${g.bp.total.toLocaleString()} <span style="font-size:14px;font-weight:500;color:var(--text-2)">条</span></div>
       <div class="qg-sub">已接入：${g.bp.source}</div>
       <div class="qg-breakdown">${bpChips}</div>
-      <div class="qg-next-week-label"><span class="qg-dot next-week"></span>下周开办（不含暂定）</div>
-      <div class="qg-breakdown next-week">${nextBpChips}</div>
-      <div class="qg-meta"><span>数据更新：${g.bp.updated}</span><span class="dot"></span><span>本周 ${g.bp.cities.length} 城 · 下周 ${g.bp.nextWeekCities.length} 城</span></div>
+      <div class="qg-meta"><span>数据更新：${g.bp.updated}</span><span class="dot"></span><span>本周 ${g.bp.cities.length} 城</span></div>
+    </div>
+    <div class="q3-goal-card goal-ticket-next">
+      <div class="qg-label"><span class="qg-dot"></span>${g.nextTicket.label} · 下周开办（不含暂定）</div>
+      <div class="qg-value" style="color:var(--amber)">${g.nextTicket.total.toLocaleString()} <span style="font-size:14px;font-weight:500;color:var(--text-2)">条</span></div>
+      <div class="qg-sub">${g.nextTicket.source}</div>
+      <div class="qg-breakdown">${nextTicketChips}</div>
+      <div class="qg-meta"><span>数据更新：${g.nextTicket.updated}</span><span class="dot"></span><span>下周 ${g.nextTicket.cities.length} 城</span></div>
+    </div>
+    <div class="q3-goal-card goal-bp-next">
+      <div class="qg-label"><span class="qg-dot"></span>${g.nextBp.label} · 下周开办（不含暂定）</div>
+      <div class="qg-value" style="color:var(--amber)">${g.nextBp.total.toLocaleString()} <span style="font-size:14px;font-weight:500;color:var(--text-2)">条</span></div>
+      <div class="qg-sub">${g.nextBp.source}</div>
+      <div class="qg-breakdown">${nextBpChips}</div>
+      <div class="qg-meta"><span>数据更新：${g.nextBp.updated}</span><span class="dot"></span><span>下周 ${g.nextBp.cities.length} 城</span></div>
     </div>
   `;
 }
