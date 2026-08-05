@@ -4035,44 +4035,48 @@ const CAMPAIGN_DATA={
 const Q3_GOALS={
   ticket:{
     label:'品牌市场部索票数据',
-    total:1749,
+    total:4648,
+    current:1749,
     cities:[
-      {name:'上海',edition:68,value:1414},
-      {name:'青岛',edition:38,value:335}
+      {name:'上海',edition:68,target:3413,current:1414},
+      {name:'青岛',edition:38,target:1235,current:335}
     ],
-    updated:'2026-08-04',
-    source:'华夏后台 · 近30天 · 新媒体+运营免费渠道'
+    updated:'2026-08-05',
+    source:'华夏后台 · 近30天 · 新媒体+运营免费渠道（当前）; 战役早会同步 · 索票目标（目标）'
   },
   bp:{
     label:'爆品预约数据',
-    total:8816,
+    total:9618,
+    current:8816,
     cities:[
-      {name:'上海',edition:68,value:8300},
-      {name:'青岛',edition:38,value:516}
+      {name:'上海',edition:68,target:8500,current:8300},
+      {name:'青岛',edition:38,target:1118,current:516}
     ],
     updated:'2026-08-05',
-    source:'华夏后台 · 近三月 · 商品订单数据'
+    source:'华夏后台 · 近三月 · 商品订单数据（当前）; 战役早会同步 · 预约目标（目标）'
   },
   nextTicket:{
     label:'下周索票目标',
     total:4937,
+    current:0,
     cities:[
-      {name:'南宁',edition:16,value:1105},
-      {name:'台州',edition:9,value:1370},
-      {name:'兰州',edition:4,value:354},
-      {name:'芜湖',edition:5,value:2108}
+      {name:'南宁',edition:16,target:1105,current:0},
+      {name:'台州',edition:9,target:1370,current:0},
+      {name:'兰州',edition:4,target:354,current:0},
+      {name:'芜湖',edition:5,target:2108,current:0}
     ],
     updated:'2026-08-05',
-    source:'战役早会同步 · 索票目标'
+    source:'战役早会同步 · 索票目标（当前列暂为空，待华夏后台同步）'
   },
   nextBp:{
     label:'下周爆品预约',
     total:0,
+    current:0,
     cities:[
-      {name:'南宁',edition:16,value:0},
-      {name:'台州',edition:9,value:0},
-      {name:'兰州',edition:4,value:0},
-      {name:'芜湖',edition:5,value:0}
+      {name:'南宁',edition:16,target:0,current:0},
+      {name:'台州',edition:9,target:0,current:0},
+      {name:'兰州',edition:4,target:0,current:0},
+      {name:'芜湖',edition:5,target:0,current:0}
     ],
     updated:'2026-08-05',
     source:'战役早会同步 · 爆品尚未上线'
@@ -4083,35 +4087,44 @@ function renderQ3Goals(){
   const g=Q3_GOALS;
   const el=document.getElementById('q3-goal-grid');
   if(!el) return;
-  const ticketChips=g.ticket.cities.map(c=>`<span class="qg-chip">${c.name}${c.edition}届 · ${c.value.toLocaleString()} 条</span>`).join('');
-  const bpChips=g.bp.cities.map(c=>`<span class="qg-chip">${c.name}${c.edition}届 · ${c.value.toLocaleString()} 条</span>`).join('');
-  const nextTicketChips=g.nextTicket.cities.map(c=>`<span class="qg-chip next-week">${c.name}${c.edition}届 · 目标 ${c.value.toLocaleString()} 条</span>`).join('');
-  const nextBpChips=g.nextBp.cities.map(c=>`<span class="qg-chip next-week">${c.name}${c.edition}届 · ${c.value>0?c.value.toLocaleString()+' 条':'未上线'}</span>`).join('');
+  const fmt=n=>(n===null||n===undefined||n==='')?'—':Number(n).toLocaleString();
+  const pct=(cur,tot)=>{
+    if(tot==null||tot===0||cur==null||cur==='') return '—';
+    return (Number(cur)/Number(tot)*100).toFixed(1)+'%';
+  };
+  const ticketChips=g.ticket.cities.map(c=>`<span class="qg-chip">${c.name}${c.edition}届 · ${fmt(c.current)} / ${fmt(c.target)}</span>`).join('');
+  const bpChips=g.bp.cities.map(c=>`<span class="qg-chip">${c.name}${c.edition}届 · ${fmt(c.current)} / ${fmt(c.target)}</span>`).join('');
+  const nextTicketChips=g.nextTicket.cities.map(c=>`<span class="qg-chip next-week">${c.name}${c.edition}届 · ${fmt(c.current)} / ${fmt(c.target)}</span>`).join('');
+  const nextBpChips=g.nextBp.cities.map(c=>`<span class="qg-chip next-week">${c.name}${c.edition}届 · ${c.target>0?fmt(c.current)+' / '+fmt(c.target):'未上线'}</span>`).join('');
   el.innerHTML=`
     <div class="q3-goal-card goal-ticket">
       <div class="qg-label"><span class="qg-dot"></span>${g.ticket.label} · 本周开办</div>
-      <div class="qg-value" style="color:var(--blue)">${g.ticket.total.toLocaleString()} <span style="font-size:14px;font-weight:500;color:var(--text-2)">条</span></div>
+      <div class="qg-value" style="color:var(--blue)">${pct(g.ticket.current,g.ticket.total)}</div>
+      <div class="qg-sub">${fmt(g.ticket.current)} / ${fmt(g.ticket.total)} 条 · 目标完成率</div>
       <div class="qg-sub">已接入：${g.ticket.source}</div>
       <div class="qg-breakdown">${ticketChips}</div>
       <div class="qg-meta"><span>数据更新：${g.ticket.updated}</span><span class="dot"></span><span>本周 ${g.ticket.cities.length} 城</span></div>
     </div>
     <div class="q3-goal-card goal-bp">
       <div class="qg-label"><span class="qg-dot"></span>${g.bp.label} · 本周开办</div>
-      <div class="qg-value" style="color:var(--coral)">${g.bp.total.toLocaleString()} <span style="font-size:14px;font-weight:500;color:var(--text-2)">条</span></div>
+      <div class="qg-value" style="color:var(--coral)">${pct(g.bp.current,g.bp.total)}</div>
+      <div class="qg-sub">${fmt(g.bp.current)} / ${fmt(g.bp.total)} 条 · 预约完成率</div>
       <div class="qg-sub">已接入：${g.bp.source}</div>
       <div class="qg-breakdown">${bpChips}</div>
       <div class="qg-meta"><span>数据更新：${g.bp.updated}</span><span class="dot"></span><span>本周 ${g.bp.cities.length} 城</span></div>
     </div>
     <div class="q3-goal-card goal-ticket-next">
       <div class="qg-label"><span class="qg-dot"></span>${g.nextTicket.label} · 下周开办（不含暂定）</div>
-      <div class="qg-value" style="color:var(--amber)">${g.nextTicket.total.toLocaleString()} <span style="font-size:14px;font-weight:500;color:var(--text-2)">条</span></div>
+      <div class="qg-value" style="color:var(--amber)">${pct(g.nextTicket.current,g.nextTicket.total)}</div>
+      <div class="qg-sub">${fmt(g.nextTicket.current)} / ${fmt(g.nextTicket.total)} 条 · 目标完成率</div>
       <div class="qg-sub">${g.nextTicket.source}</div>
       <div class="qg-breakdown">${nextTicketChips}</div>
       <div class="qg-meta"><span>数据更新：${g.nextTicket.updated}</span><span class="dot"></span><span>下周 ${g.nextTicket.cities.length} 城</span></div>
     </div>
     <div class="q3-goal-card goal-bp-next">
       <div class="qg-label"><span class="qg-dot"></span>${g.nextBp.label} · 下周开办（不含暂定）</div>
-      <div class="qg-value" style="color:var(--amber)">${g.nextBp.total.toLocaleString()} <span style="font-size:14px;font-weight:500;color:var(--text-2)">条</span></div>
+      <div class="qg-value" style="color:var(--amber)">${g.nextBp.total>0?pct(g.nextBp.current,g.nextBp.total):'未上线'}</div>
+      <div class="qg-sub">${g.nextBp.total>0?fmt(g.nextBp.current)+' / '+fmt(g.nextBp.total)+' 条 · 预约完成率':'爆品尚未上线，暂无数据'}</div>
       <div class="qg-sub">${g.nextBp.source}</div>
       <div class="qg-breakdown">${nextBpChips}</div>
       <div class="qg-meta"><span>数据更新：${g.nextBp.updated}</span><span class="dot"></span><span>下周 ${g.nextBp.cities.length} 城</span></div>
