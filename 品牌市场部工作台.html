@@ -319,6 +319,12 @@ a{color:inherit;text-decoration:none}
 .resource-item a:hover{text-decoration:underline}
 .resource-item .doc-icon{font-size:14px;color:var(--text-3)}
 .resource-item .doc-type{font-size:10px;color:var(--text-3);padding:1px 6px;background:var(--bg-soft);border-radius:3px;flex-shrink:0}
+.drive-card{border-left:4px solid var(--blue)}
+.drive-card .drive-btn{display:inline-flex;align-items:center;gap:6px;background:var(--blue);color:#fff;padding:9px 16px;border-radius:var(--radius-sm);font-size:13px;font-weight:500;margin-bottom:4px;text-decoration:none}
+.drive-card .drive-btn:hover{background:#2566c4}
+.drive-card .drive-info{font-size:12px;color:var(--text-2);line-height:1.9}
+.drive-card .drive-info code{background:var(--bg-soft);padding:2px 8px;border-radius:4px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px;color:var(--text-1)}
+.drive-card .drive-tip{font-size:11px;color:var(--text-3);margin-top:8px}
 
 /* ===== Hide ===== */
 .view{display:none}
@@ -2945,7 +2951,24 @@ function renderReport(){
 /* ===== Resources (editable) ===== */
 function renderResources(){
   const grid=document.getElementById('resource-grid');
-  grid.innerHTML=Object.entries(WORKLINES).map(([key,wl])=>{
+  if(!grid)return;
+  const driveCard=`<div class="resource-group drive-card">
+    <h3><span class="rg-tag" style="background:var(--blue-bg);color:var(--blue-text)">网盘</span>团队共享网盘</h3>
+    <div class="resource-item" style="border-bottom:none;padding:10px 0">
+      <div class="ri-main" style="align-items:flex-start;gap:10px;flex-direction:column;width:100%">
+        <a class="drive-btn" href="http://192.168.1.18:5000/" target="_blank" rel="noopener noreferrer">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+          打开网盘
+        </a>
+        <div class="drive-info">
+          <div>账号：<code>manager_rw</code></div>
+          <div>密码：<code>hxjb_rw@A123</code></div>
+        </div>
+        <div class="drive-tip">⚠ 需连接公司内网后访问</div>
+      </div>
+    </div>
+  </div>`;
+  grid.innerHTML=driveCard+Object.entries(WORKLINES).map(([key,wl])=>{
     const res=RESOURCES.find(r=>r.wl===key);
     const items=res?res.items:[];
     return `<div class="resource-group" data-wl="${key}">
