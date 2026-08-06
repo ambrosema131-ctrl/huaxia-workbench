@@ -4084,8 +4084,8 @@ const Q3_GOALS={
       {name:'兰州',edition:4,target:354,current:0},
       {name:'芜湖',edition:5,target:2108,current:0}
     ],
-    updated:'2026-08-05',
-    source:'战役早会同步 · 索票目标（当前列暂为空，待华夏后台同步）'
+    updated:'2026-08-06',
+    source:'战役早会同步 · 索票目标（目标）；华夏后台 · 当前完成值待同步'
   },
   nextBp:{
     label:'下周爆品预约',
@@ -4097,8 +4097,8 @@ const Q3_GOALS={
       {name:'兰州',edition:4,target:0,current:0},
       {name:'芜湖',edition:5,target:0,current:0}
     ],
-    updated:'2026-08-05',
-    source:'战役早会同步 · 爆品尚未上线'
+    updated:'2026-08-06',
+    source:'战役早会同步 · 爆品尚未上线（目标与当前值均未同步）'
   }
 };
 
@@ -4111,10 +4111,19 @@ function renderQ3Goals(){
     if(tot==null||tot===0||cur==null||cur==='') return '—';
     return (Number(cur)/Number(tot)*100).toFixed(1)+'%';
   };
+  // 下周数据若 target>0 但 current===0，视为尚未从华夏后台同步，显示“待同步”
+  const fmtNext=(cur,tot)=>{
+    if(tot>0 && (cur===0 || cur==null || cur==='')) return '待同步';
+    return fmt(cur);
+  };
+  const pctNext=(cur,tot)=>{
+    if(tot>0 && (cur===0 || cur==null || cur==='')) return '待同步';
+    return pct(cur,tot);
+  };
   const ticketChips=g.ticket.cities.map(c=>`<span class="qg-chip">${c.name}${c.edition}届 · ${fmt(c.current)} / ${fmt(c.target)}</span>`).join('');
   const bpChips=g.bp.cities.map(c=>`<span class="qg-chip">${c.name}${c.edition}届 · ${fmt(c.current)} / ${fmt(c.target)}</span>`).join('');
-  const nextTicketChips=g.nextTicket.cities.map(c=>`<span class="qg-chip next-week">${c.name}${c.edition}届 · ${fmt(c.current)} / ${fmt(c.target)}</span>`).join('');
-  const nextBpChips=g.nextBp.cities.map(c=>`<span class="qg-chip next-week">${c.name}${c.edition}届 · ${c.target>0?fmt(c.current)+' / '+fmt(c.target):'未上线'}</span>`).join('');
+  const nextTicketChips=g.nextTicket.cities.map(c=>`<span class="qg-chip next-week">${c.name}${c.edition}届 · ${fmtNext(c.current,c.target)} / ${fmt(c.target)}</span>`).join('');
+  const nextBpChips=g.nextBp.cities.map(c=>`<span class="qg-chip next-week">${c.name}${c.edition}届 · ${c.target>0?fmtNext(c.current,c.target)+' / '+fmt(c.target):'未上线'}</span>`).join('');
   el.innerHTML=`
     <div class="q3-goal-card goal-ticket">
       <div class="qg-label"><span class="qg-dot"></span>${g.ticket.label} · 本周开办</div>
@@ -4134,16 +4143,16 @@ function renderQ3Goals(){
     </div>
     <div class="q3-goal-card goal-ticket-next">
       <div class="qg-label"><span class="qg-dot"></span>${g.nextTicket.label} · 下周开办（不含暂定）</div>
-      <div class="qg-value" style="color:var(--amber)">${pct(g.nextTicket.current,g.nextTicket.total)}</div>
-      <div class="qg-sub">${fmt(g.nextTicket.current)} / ${fmt(g.nextTicket.total)} 条 · 目标完成率</div>
+      <div class="qg-value" style="color:var(--amber)">${pctNext(g.nextTicket.current,g.nextTicket.total)}</div>
+      <div class="qg-sub">${fmtNext(g.nextTicket.current,g.nextTicket.total)} / ${fmt(g.nextTicket.total)} 条 · 目标完成率</div>
       <div class="qg-sub">${g.nextTicket.source}</div>
       <div class="qg-breakdown">${nextTicketChips}</div>
       <div class="qg-meta"><span>数据更新：${g.nextTicket.updated}</span><span class="dot"></span><span>下周 ${g.nextTicket.cities.length} 城</span></div>
     </div>
     <div class="q3-goal-card goal-bp-next">
       <div class="qg-label"><span class="qg-dot"></span>${g.nextBp.label} · 下周开办（不含暂定）</div>
-      <div class="qg-value" style="color:var(--amber)">${g.nextBp.total>0?pct(g.nextBp.current,g.nextBp.total):'未上线'}</div>
-      <div class="qg-sub">${g.nextBp.total>0?fmt(g.nextBp.current)+' / '+fmt(g.nextBp.total)+' 条 · 预约完成率':'爆品尚未上线，暂无数据'}</div>
+      <div class="qg-value" style="color:var(--amber)">${g.nextBp.total>0?pctNext(g.nextBp.current,g.nextBp.total):'未上线'}</div>
+      <div class="qg-sub">${g.nextBp.total>0?fmtNext(g.nextBp.current,g.nextBp.total)+' / '+fmt(g.nextBp.total)+' 条 · 预约完成率':'爆品尚未上线，暂无数据'}</div>
       <div class="qg-sub">${g.nextBp.source}</div>
       <div class="qg-breakdown">${nextBpChips}</div>
       <div class="qg-meta"><span>数据更新：${g.nextBp.updated}</span><span class="dot"></span><span>下周 ${g.nextBp.cities.length} 城</span></div>
