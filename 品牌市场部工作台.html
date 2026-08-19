@@ -4025,20 +4025,20 @@ function showToast(msg,type){
 
 /* ===== Campaign Module ===== */
 const CAMPAIGN_DATA={
-  quarter:'Q3',week:'八月第二周',date:'8月10日',
-  metrics:{timeProgress:39.13,revenueComplete:46.34,inviteComplete:21.5,leadingBU:'北京东北'},
-  conclusion:'Q3整体业绩完成46.34%，累计6,149.87万元，领先时间进度7.21个百分点。上海/青岛68届/38届已结束，上海爆品预约9,378条（完成110.3%），青岛858条（76.7%）。昆明/长沙7.31-8.2站效果复盘：昆明索票完成1287条（116.7%），长沙302条（66.8%）。本周南宁/台州/兰州/芜湖四城8.14-16开办，索票目标4,937条、爆品预约目标3,304条，华夏后台当前数据待同步。',
+  quarter:'Q3',week:'八月第三周',date:'8月19日',
+  metrics:{timeProgress:45.65,revenueComplete:46.34,inviteComplete:21.5,leadingBU:'北京东北'},
+  conclusion:'Q3整体业绩完成46.34%，累计6,149.87万元。上海68届爆品预约10,307条（121.3%），青岛38届936条（83.7%）。南宁/台州/兰州/芜湖8.14-16四城已结束，兰州索票完成率80.2%领先，芜湖索票完成率8.9%需复盘。本周北京59届/郑州40届/西宁2届8.21-23开办，索票目标4,411条、爆品预约目标12,827条。华夏后台 user/ticket 实际完成值需按城市-展届-渠道-时间维度手动回填。',
   analysis:[
-    {label:'领先面',text:'北京东北BU目完成排名第一，上海业绩额第一；津冀与川渝PK最胶着，仅相差4.46%'},
-    {label:'上海青岛',text:'上海爆品预约9,378条超额完成110.3%；青岛858条完成76.7%；索票完成数据待华夏后台回传'},
-    {label:'昆明长沙',text:'昆明索票1287条(116.7%)到场493人；长沙索票302条(66.8%)到场144人；两城优惠券共成交2,059单'},
-    {label:'本周四城',text:'南宁16届/台州9届/兰州4届/芜湖5届，索票目标合计4,937条，爆品合计3,304条，华夏后台数据待同步'}
+    {label:'上海青岛',text:'上海爆品预约10,307条超额完成121.3%；青岛936条完成83.7%；索票完成2178/507，完成率64%/41%'},
+    {label:'上周四城',text:'兰州索票284条(80.2%)、爆品435条(58%)；南宁561条(50.8%)、爆品1507条(128%)；台州583条(42.6%)、爆品837条(105%)；芜湖188条(8.9%)、爆品832条(144%)'},
+    {label:'本周三城',text:'北京59届索票目标2902、爆品目标10887；郑州40届索票1361、爆品1340；西宁2届索票148、爆品600'},
+    {label:'下周四城',text:'广州46届/宁波14届/太原5届/银川1届8.28-30开办，索票目标4,083条、爆品目标6,497条'}
   ],
   actions:[
-    {priority:'P0',action:'本周四城（南宁/台州/兰州/芜湖）索票冲刺，确保华夏后台数据及时同步',owner:'马乐',deadline:'8月13日',criteria:'各城索票完成数据回传'},
-    {priority:'P0',action:'确认创新奖11个课题的审核时间、首轮入选名单',owner:'马江龙',deadline:'8月13日',criteria:'形成清单并同步7个申报BU'},
-    {priority:'P0',action:'昆明、长沙提高本地推占比，补充私信与团购链路',owner:'马乐',deadline:'8月13日',criteria:'给出预算迁移比例及预计索票增量'},
-    {priority:'P1',action:'裂变小程序版本范围与上线节点确认',owner:'刘永芳',deadline:'本周',criteria:'形成版本清单、上线时间、提升预估'}
+    {priority:'P0',action:'本周三城（北京/郑州/西宁）索票冲刺，华夏后台数据按渠道-近30天回填',owner:'马乐',deadline:'8月22日',criteria:'索票完成数回传至工作台'},
+    {priority:'P0',action:'复盘芜湖站索票完成率偏低原因，输出改进清单',owner:'马江龙',deadline:'8月21日',criteria:'形成复盘报告'},
+    {priority:'P1',action:'北京/郑州爆品预约补量，确保西宁爆品上线节奏',owner:'马乐',deadline:'8月22日',criteria:'爆品预约量达目标80%+'},
+    {priority:'P1',action:'下周四城（广州/宁波/太原/银川）预热素材与投放计划确认',owner:'白子琦',deadline:'8月22日',criteria:'素材清单+排期表'}
   ],
   cities:[
     {city:'武汉',edition:38,date:'7.24-26',status:'ended',ticketTarget:751,ticketDone:719,ticketPct:95.7,attend:296,attendPct:41.2,bpOnline:70,bpBook:2133,bpTarget:900,bpPct:237,orders:931,revenue:'656万',revenuePct:99.2},
@@ -4046,68 +4046,72 @@ const CAMPAIGN_DATA={
     {city:'东莞',edition:27,date:'7.24-26',status:'ended',ticketTarget:1006,ticketDone:824,ticketPct:81.9,attend:307,attendPct:37.3,bpOnline:157,bpBook:2458,bpTarget:1275,bpPct:192.8,orders:2042,revenue:'662万',revenuePct:93.5},
     {city:'昆明',edition:33,date:'7.31-8.2',status:'ended',ticketTarget:1103,ticketDone:1287,ticketPct:116.7,attend:493,attendPct:38.3,bpOnline:40,bpBook:890,bpTarget:1200,bpPct:74.2,orders:1571,revenue:'1049万',revenuePct:179.3},
     {city:'长沙',edition:3,date:'7.31-8.2',status:'ended',ticketTarget:452,ticketDone:302,ticketPct:66.8,attend:144,attendPct:47.7,bpOnline:53,bpBook:383,bpTarget:500,bpPct:76.6,orders:488,revenue:'349万',revenuePct:87.5},
-    {city:'上海',edition:68,date:'8.7-9',status:'ended',ticketTarget:3413,ticketDone:0,ticketPct:0,attend:0,attendPct:0,bpOnline:136,bpBook:9378,bpTarget:8500,bpPct:110.3,orders:0,revenue:'—',revenuePct:0},
-    {city:'青岛',edition:38,date:'8.7-9',status:'ended',ticketTarget:1235,ticketDone:0,ticketPct:0,attend:0,attendPct:0,bpOnline:50,bpBook:858,bpTarget:1118,bpPct:76.7,orders:0,revenue:'—',revenuePct:0},
-    {city:'南宁',edition:16,date:'8.14-16',status:'upcoming',ticketTarget:1105,ticketDone:0,ticketPct:0,attend:0,attendPct:0,bpOnline:0,bpBook:0,bpTarget:1175,bpPct:0,orders:0,revenue:'—',revenuePct:0},
-    {city:'台州',edition:9,date:'8.14-16',status:'upcoming',ticketTarget:1370,ticketDone:0,ticketPct:0,attend:0,attendPct:0,bpOnline:0,bpBook:0,bpTarget:800,bpPct:0,orders:0,revenue:'—',revenuePct:0},
-    {city:'兰州',edition:4,date:'8.14-16',status:'upcoming',ticketTarget:354,ticketDone:0,ticketPct:0,attend:0,attendPct:0,bpOnline:0,bpBook:0,bpTarget:750,bpPct:0,orders:0,revenue:'—',revenuePct:0},
-    {city:'芜湖',edition:5,date:'8.14-16',status:'upcoming',ticketTarget:2108,ticketDone:0,ticketPct:0,attend:0,attendPct:0,bpOnline:0,bpBook:0,bpTarget:579,bpPct:0,orders:0,revenue:'—',revenuePct:0},
-    {city:'北京',edition:59,date:'8.21-23',status:'upcoming',ticketTarget:0,ticketDone:0,ticketPct:0,attend:0,attendPct:0,bpOnline:11937,bpBook:0,bpTarget:0,bpPct:0,orders:0,revenue:'—',revenuePct:0},
-    {city:'郑州',edition:40,date:'8.21-23',status:'upcoming',ticketTarget:0,ticketDone:0,ticketPct:0,attend:0,attendPct:0,bpOnline:1340,bpBook:0,bpTarget:0,bpPct:0,orders:0,revenue:'—',revenuePct:0},
-    {city:'西宁',edition:2,date:'8.21-23',status:'upcoming',ticketTarget:0,ticketDone:0,ticketPct:0,attend:0,attendPct:0,bpOnline:600,bpBook:0,bpTarget:0,bpPct:0,orders:0,revenue:'—',revenuePct:0}
+    {city:'上海',edition:68,date:'8.7-9',status:'ended',ticketTarget:3413,ticketDone:2178,ticketPct:63.8,attend:716,attendPct:33,bpOnline:136,bpBook:10307,bpTarget:8500,bpPct:121.3,orders:0,revenue:'—',revenuePct:0},
+    {city:'青岛',edition:38,date:'8.7-9',status:'ended',ticketTarget:1235,ticketDone:507,ticketPct:41.1,attend:192,attendPct:38,bpOnline:50,bpBook:936,bpTarget:1118,bpPct:83.7,orders:0,revenue:'—',revenuePct:0},
+    {city:'南宁',edition:16,date:'8.14-16',status:'ended',ticketTarget:1105,ticketDone:561,ticketPct:50.8,attend:209,attendPct:37,bpOnline:22,bpBook:1507,bpTarget:1175,bpPct:128.3,orders:0,revenue:'—',revenuePct:0},
+    {city:'台州',edition:9,date:'8.14-16',status:'ended',ticketTarget:1370,ticketDone:583,ticketPct:42.6,attend:235,attendPct:40,bpOnline:46,bpBook:837,bpTarget:800,bpPct:104.6,orders:0,revenue:'—',revenuePct:0},
+    {city:'兰州',edition:4,date:'8.14-16',status:'ended',ticketTarget:354,ticketDone:284,ticketPct:80.2,attend:107,attendPct:38,bpOnline:74,bpBook:435,bpTarget:750,bpPct:58.0,orders:0,revenue:'—',revenuePct:0},
+    {city:'芜湖',edition:5,date:'8.14-16',status:'ended',ticketTarget:2108,ticketDone:188,ticketPct:8.9,attend:89,attendPct:47,bpOnline:42,bpBook:832,bpTarget:579,bpPct:143.7,orders:0,revenue:'—',revenuePct:0},
+    {city:'北京',edition:59,date:'8.21-23',status:'upcoming',ticketTarget:2902,ticketDone:519,ticketPct:17.9,attend:0,attendPct:0,bpOnline:0,bpBook:4572,bpTarget:10887,bpPct:42.0,orders:0,revenue:'—',revenuePct:0},
+    {city:'郑州',edition:40,date:'8.21-23',status:'upcoming',ticketTarget:1361,ticketDone:233,ticketPct:17.1,attend:0,attendPct:0,bpOnline:0,bpBook:1582,bpTarget:1340,bpPct:118.1,orders:0,revenue:'—',revenuePct:0},
+    {city:'西宁',edition:2,date:'8.21-23',status:'upcoming',ticketTarget:148,ticketDone:0,ticketPct:0,attend:0,attendPct:0,bpOnline:0,bpBook:12,bpTarget:600,bpPct:2.0,orders:0,revenue:'—',revenuePct:0},
+    {city:'广州',edition:46,date:'8.28-30',status:'upcoming',ticketTarget:1651,ticketDone:0,ticketPct:0,attend:0,attendPct:0,bpOnline:0,bpBook:1632,bpTarget:4317,bpPct:37.8,orders:0,revenue:'—',revenuePct:0},
+    {city:'宁波',edition:14,date:'8.28-30',status:'upcoming',ticketTarget:1709,ticketDone:0,ticketPct:0,attend:0,attendPct:0,bpOnline:0,bpBook:168,bpTarget:1253,bpPct:13.4,orders:0,revenue:'—',revenuePct:0},
+    {city:'太原',edition:5,date:'8.28-30',status:'upcoming',ticketTarget:436,ticketDone:0,ticketPct:0,attend:0,attendPct:0,bpOnline:0,bpBook:209,bpTarget:527,bpPct:39.7,orders:0,revenue:'—',revenuePct:0},
+    {city:'银川',edition:1,date:'8.28-30',status:'upcoming',ticketTarget:287,ticketDone:0,ticketPct:0,attend:0,attendPct:0,bpOnline:0,bpBook:30,bpTarget:400,bpPct:7.5,orders:0,revenue:'—',revenuePct:0}
   ]
 };
 
 const Q3_GOALS={
   ticket:{
     label:'品牌市场部索票数据',
-    total:0,
+    total:4411,
     current:0,
     cities:[
-      {name:'北京',edition:59,target:0,current:0},
-      {name:'郑州',edition:40,target:0,current:0},
-      {name:'西宁',edition:2,target:0,current:0}
+      {name:'北京',edition:59,target:2902,current:0},
+      {name:'郑州',edition:40,target:1361,current:0},
+      {name:'西宁',edition:2,target:148,current:0}
     ],
     updated:'2026-08-19',
-    source:'战役早会同步表格授权过期（2026-08-19），目标/完成值待重新接入华夏后台后回填'
+    source:'目标：战役早会同步表；完成值：华夏后台 user/ticket（新媒体免费+运营免费渠道，近30天）待回填'
   },
   bp:{
     label:'爆品预约数据',
-    total:0,
+    total:12827,
     current:0,
     cities:[
-      {name:'北京',edition:59,target:0,current:0},
-      {name:'郑州',edition:40,target:0,current:0},
-      {name:'西宁',edition:2,target:0,current:0}
+      {name:'北京',edition:59,target:10887,current:0},
+      {name:'郑州',edition:40,target:1340,current:0},
+      {name:'西宁',edition:2,target:600,current:0}
     ],
     updated:'2026-08-19',
-    source:'战役早会同步表格授权过期（2026-08-19），爆品目标/预约值待重新接入华夏后台后回填'
+    source:'目标：战役早会同步表；完成值：华夏后台 user/ticket（营销中心-商品管理，近三月）待回填'
   },
   nextTicket:{
     label:'下周索票目标',
-    total:0,
+    total:4083,
     current:0,
     cities:[
-      {name:'广州',edition:46,target:0,current:0},
-      {name:'宁波',edition:14,target:0,current:0},
-      {name:'太原',edition:5,target:0,current:0},
-      {name:'银川',edition:1,target:0,current:0}
+      {name:'广州',edition:46,target:1651,current:0},
+      {name:'宁波',edition:14,target:1709,current:0},
+      {name:'太原',edition:5,target:436,current:0},
+      {name:'银川',edition:1,target:287,current:0}
     ],
     updated:'2026-08-19',
-    source:'战役早会同步表格授权过期（2026-08-19），下周索票目标/完成值待回填'
+    source:'目标：战役早会同步表；完成值：华夏后台 user/ticket（新媒体免费+运营免费渠道，近30天）待回填'
   },
   nextBp:{
     label:'下周爆品预约',
-    total:0,
+    total:6497,
     current:0,
     cities:[
-      {name:'广州',edition:46,target:0,current:0},
-      {name:'宁波',edition:14,target:0,current:0},
-      {name:'太原',edition:5,target:0,current:0},
-      {name:'银川',edition:1,target:0,current:0}
+      {name:'广州',edition:46,target:4317,current:0},
+      {name:'宁波',edition:14,target:1253,current:0},
+      {name:'太原',edition:5,target:527,current:0},
+      {name:'银川',edition:1,target:400,current:0}
     ],
     updated:'2026-08-19',
-    source:'战役早会同步表格授权过期（2026-08-19），下周爆品预约待回填'
+    source:'目标：战役早会同步表；完成值：华夏后台 user/ticket（营销中心-商品管理，近三月）待回填'
   }
 };
 
